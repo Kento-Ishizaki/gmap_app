@@ -70,6 +70,4 @@ function initMap() {
 <!-- クラスターのライブラリ読込み -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <!-- google map API読込み -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk5aRysZpoAKdXvPyPCWQFJWjCl7GcCXY&callback=initMap"
-async defer></script>
 @endsection
