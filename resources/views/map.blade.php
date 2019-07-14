@@ -49,7 +49,7 @@ function initMap() {
         {name: 'ggHouse', title: '飲みましょう', lat: 35.732013, lng: 139.674847},
         {name: 'クロス都立大学', lat: 35.6186511, lng: 139.6801052},
         {name: 'ランサーズ邸', lat: 35.322405, lng: 139.566374},
-        {name: 'エドムインクリメント', lat: 35.670576, lng: 139.7193},
+        {name: 'エドムインクリメント', title: '会社です', lat: 35.670576, lng: 139.7193},
     ];
     var target = document.getElementById('map');
     var myHouse = {lat: 35.732013, lng: 139.674847};
@@ -70,7 +70,7 @@ function initMap() {
         google.maps.event.addListener( marker, 'click', ( function( marker, i) {
             return function() {
                 // infowindow.setContent(locations[i].name);
-                infowindow.setContent('<h1>' + locations[i].name + '</h1><br><h2>' + locations[i].title + '</h2>');
+                infowindow.setContent('<h1>' + locations[i].name + '</h1><hr><h2>' + locations[i].title + '</h2>');
                 infowindow.open( map, marker);
             }
         })( marker, i));
@@ -83,9 +83,10 @@ function initMap() {
         { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
     );
 
-    // マップをクリックした時、コンソールに緯度と経度表示
-    map.addListener('click', function() {
+    // マップクリックでフォーム表示
+    map.addListener('click', function(e) {
         $('#form').modal('toggle');
+        console.log();
     });
 
     // var marker = new google.maps.Marker({ position: myHouse, map: map, title: 'MyHouse'}); 
@@ -106,7 +107,7 @@ function initMap() {
 <!-- クラスターのライブラリ読込み -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <!-- google map API読込み -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk5aRysZpoAKdXvPyPCWQFJWjCl7GcCXY&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"
 async defer></script>
 
 <!-- flatpickrライブラリ読込み -->
