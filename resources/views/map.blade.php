@@ -14,7 +14,7 @@
 <div class="modal fade" id="form" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="#" method="POST">
+            <form action="#" method="POST" name="mapForm">
             @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -33,6 +33,14 @@
                         <label for="date">日付</label>
                         <input type="text" id="date" name="date" class="form-control">
                     </div>
+                    <div class="form-group col-md-6 col-md-offset-6">
+                        <label for="lat">緯度</label>
+                        <input type="text" id="lat" name="lat" class="form-control" value="">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lng">経度</label>
+                        <input type="text" id="lng" name="lng" class="form-control" value="">
+                    </div>
                     <button type="submit" class="btn btn-outline-primary">送信</button>
                 </div>
             </form>
@@ -44,6 +52,8 @@
 @section('scripts')
 <script>
 'use strict';
+var form = document.forms.mapForm;
+
 function initMap() {
     var locations = [
         {name: 'ggHouse', title: '飲みましょう', lat: 35.732013, lng: 139.674847},
@@ -83,31 +93,27 @@ function initMap() {
         { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
     );
 
-    // マップクリックでフォーム表示
+    // マップクリックイベント
     map.addListener('click', function(e) {
+        // フォーを表示
         $('#form').modal('toggle');
-        console.log();
+        // 緯度を取得
+        var clickLat = e.latLng.lat();
+        // クリックした地点の緯度をフォームにセット
+        form.lat.value = clickLat;
+
+        // // 経度を取得
+        var clickLng = e.latLng.lng();
+        // クリックした地点の経度をフォームにセット
+        form.lng.value = clickLng;
     });
 
-    // var marker = new google.maps.Marker({ position: myHouse, map: map, title: 'MyHouse'}); 
-    // var infoWindow = new google.maps.InfoWindow({
-    //     content: '<h1>ggHouse</h1>'
-    // });
-    // marker.addListener('mouseover', function() {
-    //     infoWindow.open(map, marker);
-    // });
-    // marker.addListener('mouseout', function() {
-    //     infoWindow.close(map, marker);
-    // });
-    // var markerCluster = new MarkerClusterer(map, marker,
-    //     {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
-    //     );
 }
 </script>
 <!-- クラスターのライブラリ読込み -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <!-- google map API読込み -->
-<script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk5aRysZpoAKdXvPyPCWQFJWjCl7GcCXY&callback=initMap"
 async defer></script>
 
 <!-- flatpickrライブラリ読込み -->

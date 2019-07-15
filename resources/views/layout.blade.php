@@ -6,9 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     @yield('styles')
 </head>
 <body>
+    @include('components.header')
     @yield('content')
     <script src="{{ asset('/js/app.js') }}"></script>
     @yield('scripts')

@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/map', 'MapController@index')->name('map');
 
-Route::get('/map', function () {
-    return view('map');
-});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
