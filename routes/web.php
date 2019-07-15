@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/', function() {
+    return view('top');
+});
+
+Route::resource('users', 'UserController');
 Route::get('/map', 'MapController@index')->name('map');
 
 Auth::routes();
