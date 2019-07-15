@@ -19,8 +19,10 @@
         <a href="{{ route('users.edit', ['user' => $user]) }}">
             <button class="btn btn-outline-warning w-100 mb-3">編集する</button>
         </a>
-        <a href="{{ route('users.destroy', ['user' => $user]) }}">
-            <button class="btn btn-outline-danger w-100 mb-3">削除する</button>
-        </a>
+        <form action="{{ route('users.destroy', ['user' => $user]) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-outline-danger w-100 mb-3" onclick="return confirm('削除して宜しいですか？')">削除する</button>
+        </form>
     </div>
 @endsection
