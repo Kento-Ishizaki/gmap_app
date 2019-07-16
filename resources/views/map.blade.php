@@ -31,15 +31,15 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="date">日付</label>
-                        <input type="text" id="date" name="date" class="form-control">
+                        <input type="text" id="date" name="date" class="form-control bg-light">
                     </div>
                     <div class="form-group col-md-6 col-md-offset-6">
                         <label for="lat">緯度</label>
-                        <input type="text" id="lat" name="lat" class="form-control" value="">
+                        <input type="text" id="lat" name="lat" class="form-control" value="" disabled>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lng">経度</label>
-                        <input type="text" id="lng" name="lng" class="form-control" value="">
+                        <input type="text" id="lng" name="lng" class="form-control" value="" disabled>
                     </div>
                     <button type="submit" class="btn btn-outline-primary">送信</button>
                 </div>
@@ -89,12 +89,24 @@ function initMap() {
                 scaledSize: new google.maps.Size(40, 40)
             },
         });
-        google.maps.event.addListener( marker, 'click', ( function(marker, i) {
+
+        // マーカークリックでモーダル出現
+        google.maps.event.addListener( marker, 'click', (function(marker, i) {
+            console.log('OK!!');
+        }));
+
+        // マーカーマウスホバーで簡易情報表示
+        google.maps.event.addListener( marker, 'mouseover', (function(marker, i) {
             return function() {
                 infowindow.setContent('<p>投稿者：' + locations[i].user_id + '</p><hr><p>場所：' + locations[i].place + '</p><hr><p>タイトル：' + locations[i].title + '</p>');
                 infowindow.open(map, marker);
             }
         })( marker, i));
+
+        // マーカーマウスアウトで簡易情報非表示
+        google.maps.event.addListener( marker, 'mouseout', (function(marker, i) {
+            infowindow.close(map, marker);
+        }));
         mcs.push(marker);
     }
         // マーカーをクラスターにする　

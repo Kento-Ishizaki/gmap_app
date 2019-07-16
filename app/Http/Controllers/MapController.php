@@ -24,7 +24,6 @@ class MapController extends Controller
         $map->date = $request->date;
         $map->lat = $request->lat;
         $map->lng = $request->lng;
-        $map->status = 1;
         $map->save();
         return redirect()->route('map.index');
     }
