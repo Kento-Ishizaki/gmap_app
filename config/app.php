@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'MapApp'),
 
+    'google_map_api_key' => env('GOOGLE_MAP_API_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
