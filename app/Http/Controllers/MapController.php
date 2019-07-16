@@ -10,7 +10,8 @@ class MapController extends Controller
 {
     public function index()
     {
-        return view('map');
+        $maps = Map::all();
+        return view('map', ['maps' => $maps]);
     }
 
     public function store(Request $request)
@@ -27,4 +28,5 @@ class MapController extends Controller
         $map->save();
         return redirect()->route('map.index');
     }
+
 }
