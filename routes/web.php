@@ -16,7 +16,7 @@ Route::get('/', function() {
 });
 
 Route::resource('users', 'UserController');
-Route::get('/map', 'MapController@index')->name('map');
+route::resource('map', 'MapController');
 
 Auth::routes();
 

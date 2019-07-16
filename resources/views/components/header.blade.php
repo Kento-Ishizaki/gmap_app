@@ -17,7 +17,7 @@
                 <a href="{{ route('users.show', ['user' => Auth::user()->id]) }}" class="nav-link">{{ Auth::user()->name }}</a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('map') }}" class="nav-link">マップ</a>
+                <a href="{{ route('map.index') }}" class="nav-link">マップ</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('logout') }}"
