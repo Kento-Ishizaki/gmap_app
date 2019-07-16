@@ -11,10 +11,11 @@
 @endsection
 @section('content')
 <div id="map"></div>
-<div class="modal fade" id="form" role="dialog">
+<!-- 新規用モーダル -->
+<div class="modal fade" id="form-new" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{route('map.store') }}" method="POST" name="mapForm">
+            <form action="{{route('map.store') }}" method="POST" name="newForm">
             @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -31,15 +32,15 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="date">日付</label>
-                        <input type="text" id="date" name="date" class="form-control bg-light">
+                        <input type="text" id="date" name="date" class="form-control bg-light date">
                     </div>
                     <div class="form-group col-md-6 col-md-offset-6">
                         <label for="lat">緯度</label>
-                        <input type="text" id="lat" name="lat" class="form-control" value="" disabled>
+                        <input type="text" id="lat" name="lat" class="form-control" value="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lng">経度</label>
-                        <input type="text" id="lng" name="lng" class="form-control" value="" disabled>
+                        <input type="text" id="lng" name="lng" class="form-control" value="">
                     </div>
                     <button type="submit" class="btn btn-outline-primary">送信</button>
                 </div>
@@ -47,6 +48,45 @@
         </div>
     </div>
 </div>
+<!-- END 新規用モーダル -->
+<!-- 編集用モーダル -->
+{{-- <div class="modal fade" id="form-edit" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{route('map.store') }}" method="POST" name="editForm">
+            @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="place">場所</label>
+                        <input type="text" name="place" id="place-edit" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">タイトル</label>
+                        <input type="text" name="title" id="title-edit" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">内容</label>
+                        <textarea name="content" id="content-edit" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="date">日付</label>
+                        <input type="text" id="date-edit" name="date" class="form-control bg-light date">
+                    </div>
+                    <div class="form-group col-md-6 col-md-offset-6">
+                        <label for="lat">緯度</label>
+                        <input type="text" id="lat-edit" name="lat" class="form-control" value="" disabled>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="lng">経度</label>
+                        <input type="text" id="lng-edit" name="lng" class="form-control" value="" disabled>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">編集</button>
+                    <button type="submit" class="btn btn-outline-info">コメント</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> --}}
 @php
 $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 @endphp
@@ -55,7 +95,12 @@ $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 @section('scripts')
 <script>
 'use strict';
-var form = document.forms.mapForm;
+// 新規投稿用フォーム
+var newForm = document.forms.newForm;
+
+// 編集用フォーム
+// var editForm = document.forms.editForm;
+
 function initMap() {
     var target = document.getElementById('map');
     var park = {lat: 35.732013, lng: 139.674847};
@@ -78,35 +123,50 @@ function initMap() {
         // ネストしてない連想配列を代入
         var locations = locations[0];
         var mcs = [];
-    var infowindow = new google.maps.InfoWindow();
-    for (var i = 0; i < locations.length; i++) {
+        var infowindow = new google.maps.InfoWindow();
+        for (var i = 0; i < locations.length; i++) {
         var marker = new google.maps.Marker( {
             position: new google.maps.LatLng( locations[i].lat, locations[i].lng),
             map: map,
             animation: google.maps.Animation.DROP,
-            icon: {
-                url: 'http://maps.google.com/mapfiles/ms/micons/purple-dot.png',
-                scaledSize: new google.maps.Size(40, 40)
-            },
+            label: String(locations[i].id)
         });
-
         // マーカークリックでモーダル出現
-        google.maps.event.addListener( marker, 'click', (function(marker, i) {
-            console.log('OK!!');
-        }));
+        google.maps.event.addListener( marker, 'dblclick', (function(marker, i) {
+            return function() {
+                infowindow.setContent('<div class="card">'+
+                    '<div class="card-header">'+
+                    '<p>投稿者：' + locations[i].user_id + '</p>'+
+                    '<p>タイトル：' + locations[i].title + '</p>'+
+                    '</div>'+
+                    '<div class="card-body">'+
+                    '<p>場所：' + locations[i].place + '</p>'+
+                    // '内容：' + locations[i].content+
+                    '<p>日時：' + locations[i].date + '</p>'+
+                    '</div>' +
+                    '<div class="card-footer">'+
+                    '<a href="/map/' + locations[i].id + '">'+
+                    '<button class="btn btn-outline-primary">'+
+                    '詳細'+
+                    '</button></a>'+
+                    '</div>'+
+                    '</div>');
+                infowindow.open(map, marker);
+            }
+        })(marker, i));
 
         // マーカーマウスホバーで簡易情報表示
         google.maps.event.addListener( marker, 'mouseover', (function(marker, i) {
             return function() {
-                infowindow.setContent('<p>投稿者：' + locations[i].user_id + '</p><hr><p>場所：' + locations[i].place + '</p><hr><p>タイトル：' + locations[i].title + '</p>');
+                infowindow.setContent('<p>投稿者：' + locations[i].user_id + '</p><hr><p>タイトル：' + locations[i].title + '</p><hr>' + '<p>場所：' + locations[i].place + '</p>');
                 infowindow.open(map, marker);
             }
-        })( marker, i));
+        })(marker, i));
 
         // マーカーマウスアウトで簡易情報非表示
-        google.maps.event.addListener( marker, 'mouseout', (function(marker, i) {
-            infowindow.close(map, marker);
-        }));
+        // google.maps.event.addListener( marker, 'mouseout', (function(marker, i) {
+        //     infowindow.close(map, marker);
+        // }));
         mcs.push(marker);
     }
         // マーカーをクラスターにする　
@@ -120,41 +180,32 @@ function initMap() {
         console.log(data.responseText);
     });
 
-    // var locations = [
-    //     {name: 'ggHouse', title: '飲みましょう', lat: 35.732013, lng: 139.674847},
-    //     {name: 'クロス都立大学', lat: 35.6186511, lng: 139.6801052},
-    //     {name: 'ランサーズ邸', lat: 35.322405, lng: 139.566374},
-    //     {name: 'エドムインクリメント', title: '会社です', lat: 35.670576, lng: 139.7193},
-    // ];
-
     // マップクリックイベント
     map.addListener('dblclick', function(e) {
         // フォームを表示
-        $('#form').modal('toggle');
+        $('#form-new').modal('toggle');
         // 緯度を取得
         var clickLat = e.latLng.lat();
         // クリックした地点の緯度をフォームにセット
-        form.lat.value = clickLat;
+        newForm.lat.value = clickLat;
 
         // // 経度を取得
         var clickLng = e.latLng.lng();
         // クリックした地点の経度をフォームにセット
-        form.lng.value = clickLng;
+        newForm.lng.value = clickLng;
     });
 }
 </script>
 <!-- クラスターのライブラリ読込み -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 <!-- google map API読込み -->
-// <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk5aRysZpoAKdXvPyPCWQFJWjCl7GcCXY&callback=initMap"
-<script src="https://maps.googleapis.com/maps/api/js?key={{ $google_api_key }}&callback=initMap"
-async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ $google_api_key }}&callback=initMap" async defer></script>
 
 <!-- flatpickrライブラリ読込み -->
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
 <script>
-flatpickr(document.getElementById('date'), {
+flatpickr(document.getElementsByClassName('date'), {
     locale: 'ja',
     dateFormat: 'Y/m/d',
     minDate: new Date()
