@@ -11,7 +11,7 @@ class MapController extends Controller
     public function index()
     {
         $maps = Map::all();
-        return view('map', ['maps' => $maps]);
+        return view('map.index', ['maps' => $maps]);
     }
 
     public function store(Request $request)
@@ -26,6 +26,16 @@ class MapController extends Controller
         $map->lng = $request->lng;
         $map->save();
         return redirect()->route('map.index');
+    }
+
+    public function show(Map $map)
+    {
+        return view('map.show', ['map' => $map]);
+    }
+
+    public function update(Request $request)
+    {
+        return 'update';
     }
 
 }

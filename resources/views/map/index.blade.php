@@ -36,11 +36,11 @@
                     </div>
                     <div class="form-group col-md-6 col-md-offset-6">
                         <label for="lat">緯度</label>
-                        <input type="text" id="lat" name="lat" class="form-control" value="">
+                        <input type="text" id="lat" name="lat" class="form-control" disabled>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lng">経度</label>
-                        <input type="text" id="lng" name="lng" class="form-control" value="">
+                        <input type="text" id="lng" name="lng" class="form-control" disabled>
                     </div>
                     <button type="submit" class="btn btn-outline-primary">送信</button>
                 </div>
@@ -49,44 +49,7 @@
     </div>
 </div>
 <!-- END 新規用モーダル -->
-<!-- 編集用モーダル -->
-{{-- <div class="modal fade" id="form-edit" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="{{route('map.store') }}" method="POST" name="editForm">
-            @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="place">場所</label>
-                        <input type="text" name="place" id="place-edit" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="title">タイトル</label>
-                        <input type="text" name="title" id="title-edit" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="content">内容</label>
-                        <textarea name="content" id="content-edit" rows="3" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="date">日付</label>
-                        <input type="text" id="date-edit" name="date" class="form-control bg-light date">
-                    </div>
-                    <div class="form-group col-md-6 col-md-offset-6">
-                        <label for="lat">緯度</label>
-                        <input type="text" id="lat-edit" name="lat" class="form-control" value="" disabled>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="lng">経度</label>
-                        <input type="text" id="lng-edit" name="lng" class="form-control" value="" disabled>
-                    </div>
-                    <button type="submit" class="btn btn-outline-primary">編集</button>
-                    <button type="submit" class="btn btn-outline-info">コメント</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> --}}
+
 @php
 $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 @endphp
@@ -98,14 +61,11 @@ $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 // 新規投稿用フォーム
 var newForm = document.forms.newForm;
 
-// 編集用フォーム
-// var editForm = document.forms.editForm;
-
 function initMap() {
     var target = document.getElementById('map');
     var park = {lat: 35.732013, lng: 139.674847};
     var map = new google.maps.Map(target, {
-            zoom: 12,
+            zoom: 11,
             center: park,
             disableDoubleClickZoom: true});
 
@@ -124,14 +84,16 @@ function initMap() {
         var locations = locations[0];
         var mcs = [];
         var infowindow = new google.maps.InfoWindow();
+        // 投稿の文だけ繰り返し
         for (var i = 0; i < locations.length; i++) {
+        // マーカー作成
         var marker = new google.maps.Marker( {
             position: new google.maps.LatLng( locations[i].lat, locations[i].lng),
             map: map,
             animation: google.maps.Animation.DROP,
             label: String(locations[i].id)
         });
-        // マーカークリックでモーダル出現
+        // マーカークリックでカード出現
         google.maps.event.addListener( marker, 'dblclick', (function(marker, i) {
             return function() {
                 infowindow.setContent('<div class="card">'+
@@ -141,7 +103,6 @@ function initMap() {
                     '</div>'+
                     '<div class="card-body">'+
                     '<p>場所：' + locations[i].place + '</p>'+
-                    // '内容：' + locations[i].content+
                     '<p>日時：' + locations[i].date + '</p>'+
                     '</div>' +
                     '<div class="card-footer">'+
