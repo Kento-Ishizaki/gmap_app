@@ -8,38 +8,39 @@
 @section('content')
 <div class="container mt-3">
     <h2 class="text-center">詳細</h2>
-    <form action="{{ route('map.update', ['map' => $map]) }}" method="POST" name="editForm">
-    @csrf
-    @method('PUT')
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="place">場所</label>
-                <input type="text" name="place" id="place" class="form-control" value="{{ $map->place }}" disabled>
-            </div>
-            <div class="form-group">
-                <label for="title">タイトル</label>
-            <input type="text" name="title" id="title" class="form-control" value="{{ $map->title }}" disabled>
-            </div>
-            <div class="form-group">
-                <label for="content">内容</label>
-                <textarea name="content" id="content" rows="3" class="form-control" disabled>{{ $map->content }}</textarea>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="date">日付</label>
-                <input type="text" id="date" name="date" class="form-control date" value="{{ $map->date }}" disabled>
-            </div>
-            <div class="form-group col-md-6 col-md-offset-6">
-                <label for="lat">緯度</label>
-                <input type="text" id="lat" name="lat" class="form-control" value="{{ $map->lat }}" disabled>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="lng">経度</label>
-                <input type="text" id="lng" name="lng" class="form-control" value="{{ $map->lng }}" disabled>
-            </div>
-            <button type="submit" class="btn btn-outline-primary w-50 mb-2">編集</button>
-            <button type="submit" class="btn btn-outline-danger w-50">削除</button>
-        </div>
-    </form>
+      <div class="modal-body">
+          <div class="form-group">
+              <label for="place">場所</label>
+              <input type="text" name="place" id="place" class="form-control" value="{{ $map->place }}" disabled>
+          </div>
+          <div class="form-group">
+              <label for="title">タイトル</label>
+          <input type="text" name="title" id="title" class="form-control" value="{{ $map->title }}" disabled>
+          </div>
+          <div class="form-group">
+              <label for="content">内容</label>
+              <textarea name="content" id="content" rows="3" class="form-control" disabled>{{ $map->content }}</textarea>
+          </div>
+          <div class="form-group col-md-6">
+              <label for="date">日付</label>
+              <input type="text" id="date" name="date" class="form-control date" value="{{ $map->date }}" disabled>
+          </div>
+          <div class="form-group col-md-6 col-md-offset-6">
+              <label for="lat">緯度</label>
+              <input type="text" id="lat" name="lat" class="form-control" value="{{ $map->lat }}" disabled>
+          </div>
+          <div class="form-group col-md-6">
+              <label for="lng">経度</label>
+              <input type="text" id="lng" name="lng" class="form-control" value="{{ $map->lng }}" disabled>
+          </div>
+          <a href="{{ route('map.edit', ['map' => $map]) }}">
+            <button class="btn btn-outline-primary w-50 mb-2">編集</button>
+          </a>
+          @component('components.delete-btn')
+            @slot('name', 'map')
+            @slot('id', $map->id)
+          @endcomponent
+      </div>
 </div>
 @endsection
 

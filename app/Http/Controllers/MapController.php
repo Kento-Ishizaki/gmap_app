@@ -33,9 +33,27 @@ class MapController extends Controller
         return view('map.show', ['map' => $map]);
     }
 
-    public function update(Request $request)
+    public function edit(Map $map)
     {
-        return 'update';
+      return view('map.edit', ['map' => $map]);
     }
 
+    public function update(Request $request, Map $map)
+    {
+      $map->user_id = Auth::id();
+      $map->place = $request->place;
+      $map->title = $request->title;
+      $map->content = $request->content;
+      $map->date = $request->date;
+      $map->lat = $request->lat;
+      $map->lng = $request->lng;
+      $map->save();
+      return redirect()->route('map.index');
+    }
+
+    public function destroy(Map $map)
+    {
+      $map->delete();
+      return redirect()->route('map.index');
+    }
 }
