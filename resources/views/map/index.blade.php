@@ -10,7 +10,11 @@
 </style>
 @endsection
 @section('content')
-<div id="map"></div>
+<div class="position-absolute" style="top: 9%; left: 25%; z-index: 1;">
+    <input id="address" type="textbox" value="東京駅" class="py-2">
+    <input id="submit" type="button" value="検索" class="py-2 btn btn-warning">
+</div>
+<div id="map" class="position-relative"></div>
 <!-- 新規用モーダル -->
 <div class="modal fade" id="form-new" role="dialog">
     <div class="modal-dialog" role="document">
@@ -70,6 +74,14 @@ function initMap() {
             zoom: 11,
             center: park,
             disableDoubleClickZoom: true});
+    // 検索機能
+    var geocoder = new google.maps.Geocoder();
+
+    // 検索ボタンのクリックイベント
+    document.getElementById('submit').addEventListener('click', function() {
+       geocodeAddress(geocoder, map); 
+    });
+
     $.ajax({
         type: 'GET',
         url: '/api/map',
@@ -131,7 +143,7 @@ function initMap() {
         // }));
         mcs.push(marker);
     }
-        // マーカーをクラスターにする　
+        // マーカーをクラスターにする
         var markerCluster = new MarkerClusterer(
         map, mcs,
         { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
@@ -157,6 +169,23 @@ function initMap() {
         newForm.lng.value = clickLng;
     });
 
+    // 地名検索イベント
+    function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({ 'address': address}, function(results, status) {
+            if(status === 'OK') {
+                map.setZoom(17);
+                resultsMap.setCenter(results[0].geometry.location);
+                var marker = new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location,
+                zoom: 4
+            });
+            } else {
+                alert('検索できませんでした。理由：' + status);
+            }
+        });
+    }
 
 }
 </script>
