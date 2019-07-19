@@ -42,7 +42,7 @@
                         <label for="lng">経度</label>
                         <input type="text" id="lng" name="lng" class="form-control">
                     </div>
-                    <button type="submit" class="btn btn-outline-primary">送信</button>
+                    <button type="submit" class="btn btn-outline-primary" id="post">送信</button>
                 </div>
             </form>
         </div>
@@ -62,13 +62,14 @@ $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 var newForm = document.forms.newForm;
 
 function initMap() {
+    // マップ表示ターゲット
     var target = document.getElementById('map');
+    // デフォルト中心位置
     var park = {lat: 35.732013, lng: 139.674847};
     var map = new google.maps.Map(target, {
             zoom: 11,
             center: park,
             disableDoubleClickZoom: true});
-
     $.ajax({
         type: 'GET',
         url: '/api/map',
@@ -155,6 +156,8 @@ function initMap() {
         // クリックした地点の経度をフォームにセット
         newForm.lng.value = clickLng;
     });
+
+
 }
 </script>
 <!-- クラスターのライブラリ読込み -->
