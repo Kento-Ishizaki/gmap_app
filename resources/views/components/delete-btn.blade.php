@@ -5,15 +5,3 @@
   削除
 </button>
 </form>
-
-<script>
-// 'use strict';
-// var dltBtn = document.getElementById('delete');
-// dltBtn.addEventListener('click', function() {
-//   var result = confirm('本当に削除して宜しいですか？');
-//   if(result) {
-//   } else {
-//     return false;
-//   }
-// });
-</script>

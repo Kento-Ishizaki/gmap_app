@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Map;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -15,8 +16,8 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::all();
-        return $maps;
+        $maps = Map::with(['user'])->get();
+        return json_encode($maps, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
     }
 
     /**

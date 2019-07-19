@@ -98,7 +98,7 @@ function initMap() {
             return function() {
                 infowindow.setContent('<div class="card">'+
                     '<div class="card-header">'+
-                    '<p>投稿者：' + locations[i].user_id + '</p>'+
+                    '<p>投稿者：' + locations[i].user.name + '</p>'+
                     '<p>タイトル：' + locations[i].title + '</p>'+
                     '</div>'+
                     '<div class="card-body">'+
@@ -119,7 +119,7 @@ function initMap() {
         // マーカーマウスホバーで簡易情報表示
         google.maps.event.addListener( marker, 'mouseover', (function(marker, i) {
             return function() {
-                infowindow.setContent('<p>投稿者：' + locations[i].user_id + '</p><hr><p>タイトル：' + locations[i].title + '</p><hr>' + '<p>場所：' + locations[i].place + '</p>');
+                infowindow.setContent('<p>投稿者：' + locations[i].user.name + '</p><hr><p>タイトル：' + locations[i].title + '</p><hr>' + '<p>場所：' + locations[i].place + '</p>');
                 infowindow.open(map, marker);
             }
         })(marker, i));
