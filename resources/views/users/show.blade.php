@@ -4,7 +4,11 @@
     <div class="container mt-3">
         <dl class="row">
             <dt class="col-md-3 py-3">アイコン</dt>
-            <dd class="col-md-9 py-3">{{ $user->avatar_image }}</dd>
+            @if ($user->avatar_image)
+                <dd class="col-md-9 py-3"><img src="{{ $user->avatar_image }}" class="rounded-circle w-25"></dd>
+            @else
+                <dd class="col-md-9 py-3"><img src="{{ asset("noimage.png") }}" class="rounded-circle w-25"></dd>
+            @endif
             <dt class="col-md-3 py-3">名前</dt>
             <dd class="col-md-9 py-3">{{ $user->name }}</dd>
             <dt class="col-md-3 py-3">メールアドレス</dt>

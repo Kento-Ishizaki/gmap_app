@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+// S3を使うための記述
+use Storage;
 
 class UserController extends Controller
 {
@@ -19,8 +21,13 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->avatar_image = $request->avatar_image;
+        $image = $request->file('avatar_image');
+        // バケットのuploadsフォルダにアップロード
+        $path = Storage::disk('s3')->putFile('uploads', $image, 'public');
+        // アップした画像のフルパスを取得
+        $user->avatar_image = Storage::disk('s3')->url($path);
         $user->name = $request->name;
+        // $user->avatar_image = $request->file('avatar_image')->storeAs('user_images', $user->name. '.png');
         $user->email = $request->email;
         $user->age = $request->age;
         $user->sex = $request->sex;

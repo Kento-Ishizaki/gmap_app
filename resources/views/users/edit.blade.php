@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-3">
-        <form action="{{ route('users.update', ['user' => $user]) }}" method="POST">
+        <form action="{{ route('users.update', ['user' => $user]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -36,7 +36,7 @@
                 </dd>
                 <dt class="col-md-3 py-3"><label for="profile">自己紹介</label></dt>
                 <dd class="col-md-9 py-3">
-                    <textarea name="profile" id=profile class="form-group w-100 py-1" value="{{ $user->profile }}" rows="3"></textarea>
+                    <textarea name="profile" id=profile class="form-group w-100 py-1" rows="3">{{ $user->profile }}</textarea>
                 </dd>
             </dl>
         </div>
