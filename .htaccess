@@ -1,0 +1,3 @@
+<Directory /var/www/Map_date/public>
+ AllowOverride All
+</Directory>
