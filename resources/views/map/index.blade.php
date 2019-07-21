@@ -40,11 +40,11 @@
                     </div>
                     <div class="form-group col-md-6 col-md-offset-6">
                         <label for="lat">緯度</label>
-                        <input type="text" id="lat" name="lat" class="form-control">
+                        <input type="text" id="lat" name="lat" class="form-control" readonly>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="lng">経度</label>
-                        <input type="text" id="lng" name="lng" class="form-control">
+                        <input type="text" id="lng" name="lng" class="form-control" readonly>
                     </div>
                     <button type="submit" class="btn btn-outline-primary" id="post">送信</button>
                 </div>

@@ -14,7 +14,11 @@
         </div>
         <div class="form-group">
             <label for="place">アイコン</label>
-            <input type="text" name="user_avatar" id="user_avatar" class="form-control" value="{{ $map->user->avatar_image }}" disabled>
+            @if ($map->user->avatar_image)
+                <dd class="col-md-9 py-3"><img src="{{ $map->user->avatar_image }}" class="rounded-circle w-25"></dd>
+            @else
+                <dd class="col-md-9 py-3"><img src="{{ asset("noimage.png") }}" class="rounded-circle w-25"></dd>
+            @endif
         </div>
         <div class="col-md-6">
             <label for="place">性別</label>
