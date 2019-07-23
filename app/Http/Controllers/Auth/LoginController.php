@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -41,6 +42,12 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/');
+        return redirect('/')->with('danger', 'ログアウトしました。');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // ログインしたらマップへ移動
+        return redirect()->route('users.show', ['user' => $user])->with('success', 'ログインしました。');
     }
 }

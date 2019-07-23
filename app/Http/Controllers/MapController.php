@@ -25,7 +25,7 @@ class MapController extends Controller
         $map->lat = $request->lat;
         $map->lng = $request->lng;
         $map->save();
-        return redirect()->route('map.index');
+        return redirect()->route('map.index')->with('success', '投稿が完了しました。');
     }
 
     public function show(Map $map)
@@ -48,12 +48,12 @@ class MapController extends Controller
       $map->lat = $request->lat;
       $map->lng = $request->lng;
       $map->save();
-      return redirect()->route('map.index');
+      return redirect()->route('map.index')->with('success', '編集が完了しました。');
     }
 
     public function destroy(Map $map)
     {
       $map->delete();
-      return redirect()->route('map.index');
+      return redirect()->route('map.index')->with('danger', '削除しました。');
     }
 }

@@ -7,6 +7,9 @@
         <ul class="navbar-nav ml-auto">
         @guest
             <li class="nav-item">
+                <a href="{{ route('map.index') }}" class="nav-link">マップ</a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('register') }}" class="nav-link">ユーザー登録</a>
             </li>
             <li class="nav-item">

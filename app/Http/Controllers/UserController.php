@@ -33,12 +33,12 @@ class UserController extends Controller
         $user->sex = $request->sex;
         $user->profile = $request->profile;
         $user->save();
-        return redirect()->route('users.show', ['id' => $user]);
+        return redirect()->route('users.show', ['id' => $user])->with('success', '編集が完了しました。');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect('/');
+        return redirect('/')->with('danger', 'アカウントを削除しました。');
     }
 }
