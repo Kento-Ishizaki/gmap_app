@@ -17,6 +17,18 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id' => '1',
+                'name' => 'テストユーザー',
+                'email' => 'test@example.com',
+                'password' => Hash::make('password'),
+                'sex' => '男性',
+                'age' => '28',
+                'profile' => 'サンプルユーザーです。',
+                'remember_token' => str_random(10),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'id' => '2',
                 'name' => '石崎',
                 'email' => 'ishizaki@example.com',
                 'password' => Hash::make('password'),
@@ -28,7 +40,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'id' => '2',
+                'id' => '3',
                 'name' => '江古田',
                 'email' => 'ekoda@example.com',
                 'password' => Hash::make('password'),
@@ -40,7 +52,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'id' => '3',
+                'id' => '4',
                 'name' => 'ヒジン',
                 'email' => 'hijin@example.com',
                 'password' => Hash::make('password'),
@@ -52,7 +64,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => $now,
             ],
             [
-                'id' => '4',
+                'id' => '5',
                 'name' => 'ララ子',
                 'email' => 'lalako@example.com',
                 'password' => Hash::make('password'),
