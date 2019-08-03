@@ -16,27 +16,38 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function test_ユーザー１が見れる()
+
+    public function test_ユーザー登録フォームが見れる()
     {
-        $user = factory(User::class)->create();
-        dd($user);
+        $response = $this->get('/register');
+        $response
+            ->assertSee('ユーザー登録フォーム')
+            ->assertSee('登録')
+            ->assertOk();
+    }
 
+    public function test_ユーザー１と２が見れる()
+    {
+        $first = factory(User::class)->create();
+        $second = factory(User::class)->create();
+        $first->save();
+        $second->save();
+
+        // ユーザー１のテスト
         $response = $this->get('/users/1');
-        $response->assertSee('@');
+        $response
+            ->assertSee($first->name)
+            ->assertSee($first->email)
+            ->assertSee($first->sex)
+            ->assertOk();
 
-
-        // $this->visit('/users/1')
-        //     ->see('@');
-
-        // $response = $this->get('/users/1');
-        // $response->assertSee('テストユーザー');
-        // $first = factory(App\User::class)->create();
-        // $second = factory(App\User::class)->create();
-        // $first->save();
-        // $second->save();
-
-        // $this->visit('/users/1')
-        //     ->see('テストユーザー')->see('@');
+        // ユーザー２のテスト
+        $response = $this->get('/users/2');
+        $response
+            ->assertSee($second->name)
+            ->assertSee($second->avatar_image)
+            ->assertSee($second->profile)
+            ->assertOk();
     }
 
     

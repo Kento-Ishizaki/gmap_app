@@ -21,10 +21,10 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        // 'sex' => '男性',
-        // 'age' => 28,
-        // 'avatar_image' => 'sample.jpg',
-        // 'profile' => 'test',
+        'sex' => $faker->randomElement(['男性', '女性']),
+        'age' => $faker->numberBetween(0, 100),
+        'avatar_image' => 'sample.jpg',
+        'profile' => $faker->text,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
     ];
