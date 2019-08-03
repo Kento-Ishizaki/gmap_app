@@ -16,6 +16,7 @@ Route::get('/', function() {
 });
 
 Route::resource('users', 'UserController');
+// Route::get('/users/{user}', 'UserController@edit')->middleware('can:view, user');
 Route::resource('map', 'MapController');
 
 Auth::routes();

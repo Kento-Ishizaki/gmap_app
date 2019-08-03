@@ -159,7 +159,6 @@ function initMap() {
 
     // マップダブルクリックイベント
     var userId = '{{ $user_id }}';
-    console.log(userId);
     map.addListener('dblclick', function(e) {
         if(userId === '') {
             alert('予定を登録するにはログインが必要です。');

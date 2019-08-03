@@ -11,7 +11,7 @@ class MapController extends Controller
     public function index()
     {
         $maps = Map::all();
-        $user_id = Auth::id();
+        $user_id = Auth::user()->id;
         return view('map.index', ['maps' => $maps, 'user_id' => $user_id]);
     }
 
@@ -31,12 +31,14 @@ class MapController extends Controller
 
     public function show(Map $map)
     {
-        return view('map.show', ['map' => $map]);
+        $user_id = Auth::id();
+        return view('map.show', ['map' => $map, 'user_id' => $user_id]);
     }
 
     public function edit(Map $map)
     {
-      return view('map.edit', ['map' => $map]);
+        $this->authorize('view', $map);
+        return view('map.edit', ['map' => $map]);
     }
 
     public function update(Request $request, Map $map)
