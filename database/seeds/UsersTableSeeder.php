@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
 // 現在時刻をcreate_atとupdated_atに登録
 use Carbon\Carbon;
 
@@ -76,5 +77,6 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => $now,
             ]
         ]);
+        factory(App\User::class, 100)->create();
     }
 }
