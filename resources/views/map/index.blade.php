@@ -13,7 +13,7 @@
 <div id="map"></div>
 <div style="text-align: center;">
     <input id="address" type="textbox" value="東京駅" class="py-2">
-    <input id="submit" type="button" value="検索" class="py-2 btn btn-warning">
+    <input id="search" type="button" value="検索" class="py-2 btn btn-warning">
 </div>
 <!-- 新規用モーダル -->
 <div class="modal fade" id="form-new" role="dialog">
@@ -24,15 +24,18 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="place">場所</label>
-                        <input type="text" name="place" id="place" class="form-control">
+                        <input type="text" name="place" id="place" class="form-control" required>
+                        @if($errors->first('place'))
+                            <p class="text-danger">{{ $errors->first('place') }}</p>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="title">タイトル</label>
-                        <input type="text" name="title" id="title" class="form-control">
+                        <input type="text" name="title" id="title" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="content">内容</label>
-                        <textarea name="content" id="content" rows="3" class="form-control"></textarea>
+                        <textarea name="content" id="content" rows="3" class="form-control" required></textarea>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="date">日付</label>
@@ -46,7 +49,7 @@
                         <label for="lng">経度</label>
                         <input type="text" id="lng" name="lng" class="form-control" readonly>
                     </div>
-                    <button type="submit" class="btn btn-outline-primary" id="post">送信</button>
+                    <button type="submit" class="btn btn-outline-primary" id="submit">送信</button>
                 </div>
             </form>
         </div>
@@ -73,13 +76,17 @@ function initMap() {
     var map = new google.maps.Map(target, {
             zoom: 11,
             center: park,
+            // デフォルトのコントローラーを無効
             disableDefaultUI: true,
-            zoomControl: true});
+            // ズームコントローラーのみ有効
+            zoomControl: true,
+            // ダブルクリックでのズームを無効
+            disableDoubleClickZoom: true});
     // 検索機能
     var geocoder = new google.maps.Geocoder();
 
     // 検索ボタンのクリックイベント
-    document.getElementById('submit').addEventListener('click', function() {
+    document.getElementById('search').addEventListener('click', function() {
        geocodeAddress(geocoder, map); 
     });
 
@@ -198,6 +205,14 @@ flatpickr(document.getElementsByClassName('date'), {
     locale: 'ja',
     dateFormat: 'Y/m/d',
     minDate: new Date()
+});
+var submit = document.getElementById('submit');
+submit.addEventListener('click', function(e) {
+    if(newForm.date.value === '') {
+        e.preventDefault();
+        alert('日付を選択して下さい');
+        return false;
+    }
 });
 </script>
 @endsection
