@@ -11,7 +11,8 @@ class MapController extends Controller
     public function index()
     {
         $maps = Map::all();
-        return view('map.index', ['maps' => $maps]);
+        $user_id = Auth::id();
+        return view('map.index', ['maps' => $maps, 'user_id' => $user_id]);
     }
 
     public function store(Request $request)
