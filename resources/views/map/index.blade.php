@@ -10,11 +10,11 @@
 </style>
 @endsection
 @section('content')
-<div class="position-absolute" style="top: 9%; left: 25%; z-index: 1;">
+<div id="map"></div>
+<div style="text-align: center;">
     <input id="address" type="textbox" value="東京駅" class="py-2">
     <input id="submit" type="button" value="検索" class="py-2 btn btn-warning">
 </div>
-<div id="map" class="position-relative"></div>
 <!-- 新規用モーダル -->
 <div class="modal fade" id="form-new" role="dialog">
     <div class="modal-dialog" role="document">
@@ -73,7 +73,8 @@ function initMap() {
     var map = new google.maps.Map(target, {
             zoom: 11,
             center: park,
-            disableDoubleClickZoom: true});
+            disableDefaultUI: true,
+            zoomControl: true});
     // 検索機能
     var geocoder = new google.maps.Geocoder();
 
@@ -136,11 +137,6 @@ function initMap() {
                 infowindow.open(map, marker);
             }
         })(marker, i));
-
-        // マーカーマウスアウトで簡易情報非表示
-        // google.maps.event.addListener( marker, 'mouseout', (function(marker, i) {
-        //     infowindow.close(map, marker);
-        // }));
         mcs.push(marker);
     }
         // マーカーをクラスターにする
