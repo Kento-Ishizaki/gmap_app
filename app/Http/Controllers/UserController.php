@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Http\Request;
 // S3を使うための記述
 use Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -16,6 +18,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $this->authorize('view', $user);
         return view('users.edit', ['user' => $user]);
     }
 
@@ -27,7 +30,6 @@ class UserController extends Controller
         // アップした画像のフルパスを取得
         $user->avatar_image = Storage::disk('s3')->url($path);
         $user->name = $request->name;
-        // $user->avatar_image = $request->file('avatar_image')->storeAs('user_images', $user->name. '.png');
         $user->email = $request->email;
         $user->age = $request->age;
         $user->sex = $request->sex;

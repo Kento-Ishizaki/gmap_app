@@ -53,13 +53,16 @@
             <label for="lng">経度</label>
             <input type="text" id="lng" name="lng" class="form-control" value="{{ $map->lng }}" disabled>
         </div>
-        <a href="{{ route('map.edit', ['map' => $map]) }}">
-        <button class="btn btn-outline-primary w-50 mb-2">編集</button>
-        </a>
-        @component('components.delete-btn')
-        @slot('name', 'map')
-        @slot('id', $map->id)
-        @endcomponent
+        <!-- 投稿者にのみ編集や削除ボタン表示 -->
+        @if($user_id === $map->user_id)
+            <a href="{{ route('map.edit', ['map' => $map]) }}">
+                <button class="btn btn-outline-primary w-50 mb-2">編集</button>
+            </a>
+            @component('components.delete-btn')
+            @slot('name', 'map')
+            @slot('id', $map->id)
+            @endcomponent
+        @endif
 </div>
 @endsection
 

@@ -157,8 +157,13 @@ function initMap() {
         console.log(data.responseText);
     });
 
-    // マップクリックイベント
+    // マップダブルクリックイベント
+    var userId = '{{ $user_id }}';
     map.addListener('dblclick', function(e) {
+        if(userId === '') {
+            alert('予定を登録するにはログインが必要です。');
+            return false;
+        }
         // フォームを表示
         $('#form-new').modal('toggle');
         // 緯度を取得
