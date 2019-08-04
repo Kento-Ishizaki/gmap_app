@@ -53,6 +53,14 @@
             <label for="lng">経度</label>
             <input type="text" id="lng" name="lng" class="form-control" value="{{ $map->lng }}" disabled>
         </div>
+        <form method="POST" action="{{ route('comments.store', ['map' => $map]) }}" name="commentForm">
+            @csrf
+            <div class="form-group">
+                <label for="comment">コメント</label>
+                <input type="text" class="form-control w-50" name="body">
+            </div>
+            <button type="submit" class="btn btn-outline-success w-50">コメント</button>
+        </form>
         <!-- 投稿者にのみ編集や削除ボタン表示 -->
         @if($user_id === $map->user_id)
             <a href="{{ route('map.edit', ['map' => $map]) }}">

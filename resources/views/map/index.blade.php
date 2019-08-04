@@ -61,6 +61,16 @@
 $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 @endphp
 
+@if(Auth::check())
+    @php
+        $auth = 'true';
+    @endphp
+@else
+    @php
+        $auth = 'false';
+    @endphp
+@endif
+
 @endsection
 @section('scripts')
 <script>
@@ -158,9 +168,9 @@ function initMap() {
     });
 
     // マップダブルクリックイベント
-    var userId = '{{ $user_id }}';
     map.addListener('dblclick', function(e) {
-        if(userId === '') {
+        var userId = '<?php echo $auth; ?>';
+        if(userId === 'false') {
             alert('予定を登録するにはログインが必要です。');
             return false;
         }
