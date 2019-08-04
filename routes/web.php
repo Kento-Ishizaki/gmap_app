@@ -17,8 +17,7 @@ Route::get('/', function() {
 
 Route::resource('users', 'UserController');
 Route::resource('map', 'MapController');
-Route::resource('comments', 'CommentController')->middleware('auth');
-
+Route::post('/map/{map}/comments', 'CommentController@store')->name('comments.store');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -53,13 +53,31 @@
             <label for="lng">経度</label>
             <input type="text" id="lng" name="lng" class="form-control" value="{{ $map->lng }}" disabled>
         </div>
-        <form method="POST" action="{{ route('comments.store', ['map' => $map]) }}" name="commentForm">
+
+        <!-- コメントを表示 -->
+        <h2>コメント一覧</h2>
+        @forelse ($map->comments as $comment)
+            <div class="card w-50">
+                <div class="card-header">
+                    投稿者：<a href="{{route('users.show', ['user' => $comment->user->id]) }}">{{ $comment->user->name }}</a>
+                </div>
+                <div class="card-body">
+                    {{ $comment->body }}
+                </div>
+            </div>
+        @empty
+            <p>コメントがありません。</p>
+        @endforelse
+        <form method="POST" action="{{ route('comments.store', $map) }}" name="commentForm">
             @csrf
             <div class="form-group">
                 <label for="comment">コメント</label>
-                <input type="text" class="form-control w-50" name="body">
+                @if($errors->has('body'))
+                    <span class="text-danger">{{ $errors->first('body') }}</span>
+                @endif
+                <input type="text" class="form-control w-50" name="body" value="{{ old('body') }}">
             </div>
-            <button type="submit" class="btn btn-outline-success w-50">コメント</button>
+            <input type="submit" class="btn btn-outline-success w-50" value="コメント">
         </form>
         <!-- 投稿者にのみ編集や削除ボタン表示 -->
         @if($user_id === $map->user_id)

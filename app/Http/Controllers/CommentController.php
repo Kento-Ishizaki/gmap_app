@@ -3,54 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Map;
 use App\Comment;
+use App\Map;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Map $map)
     {
-        $comment = new Comment();
-        $comment->body = $request->body;
-        dd($map);
-        dd($comment);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $this->validate($request, [
+            'body' => 'required'
+        ]);
+        $comment = new Comment(['body' => $request->body]);
+        $comment->user_id = Auth::user()->id;
+        $map->comments()->save($comment);
+        return redirect()->action('MapController@show', $map);
     }
 
     /**
