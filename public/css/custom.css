@@ -1,0 +1,22 @@
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif!important;
+}
+
+.top-image {
+    position: relative;
+    z-index: 1;
+}
+
+.top-image::after {
+    content: "";
+    background-image: url('../gmap.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+}

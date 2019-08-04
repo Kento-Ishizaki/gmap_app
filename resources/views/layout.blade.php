@@ -8,6 +8,8 @@
     <title>@yield('title', 'Map Date')</title>
     <link rel="stylesheet" href="{{ secure_asset('/css/app.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ secure_asset('/css/custom.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
     @yield('styles')
 </head>
 <body>

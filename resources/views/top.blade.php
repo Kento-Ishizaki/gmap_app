@@ -5,11 +5,13 @@
   <div class="container">
 
     <!-- Jumbotron Header -->
-    <header class="jumbotron my-4 border-warning">
-      <h1 class="display-3">Map Date</h1>
-      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-      <a href="#" class="btn btn-outline-warning btn-lg">Call to action!</a>
-    </header>
+    <div class="jumbotron my-4 border-warning top-image text-black">
+        <div class="bg-mask">
+            <h1 class="display-1">Gmap App</h1>
+            <p class="h3">グーグルマップAPIを使った予定共有アプリです。</p>
+            <a href="{{ route('map.index') }}" class="btn btn-warning btn-lg">マップを見る</a>
+        </div>
+    </div>
 
     <!-- Page Features -->
     <div class="row text-center">
