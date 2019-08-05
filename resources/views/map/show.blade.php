@@ -101,5 +101,4 @@ flatpickr(document.getElementsByClassName('date'), {
     minDate: new Date()
 });
 </script>
-    
 @endsection
