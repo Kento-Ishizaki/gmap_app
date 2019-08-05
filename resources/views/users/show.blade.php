@@ -45,17 +45,16 @@
         @endif
 
         <ul class="nav nav-tabs nav-fill mt-5">
-            <li class="nav-item"><a href="#" id="postsTab" class="nav-link active">投稿一覧</a></li>
-            <li class="nav-item"><a href="#" id="favosTab" class="nav-link">お気に入り一覧</a></li>
-            <li class="nav-item"><a href="#" id="commentsTab" class="nav-link">コメント一覧</a></li>
+            <li class="nav-item nav-item-show"><a href="#" id="postsTab" class="nav-link active">投稿一覧</a></li>
+            <li class="nav-item nav-item-show"><a href="#" id="favosTab" class="nav-link">お気に入り一覧</a></li>
+            <li class="nav-item nav-item-show"><a href="#" id="commentsTab" class="nav-link">コメント一覧</a></li>
         </ul>
 
-        <div id="myPosts" class="nav-cnt">
-            <h3 class="mt-5">投稿一覧</h3>
+        <div id="myPosts" class="nav-cnt mt-5">
             <div class="row">
                 @forelse($user->maps as $map)
                     <div class="col-md-6">
-                        <div class="card mb-2">
+                        <div class="card mb-3">
                             <div class="card-header">
                                 タイトル：{{ $map->title }}
                             </div>
@@ -72,12 +71,11 @@
             </div>
         </div>
 
-        <div id="myFavos" class="nav-cnt">
-            <h3 class="mt-5">お気に入りした投稿</h3>
+        <div id="myFavos" class="nav-cnt mt-5">
             <div class="row">
                 @forelse($user->comments as $comment)
                     <div class="col-md-6">
-                        <div class="card mb-2">
+                        <div class="card mb-3">
                             <div class="card-header">
                                 <p>投稿タイトル：{{ $comment->map->date }}</p>
                                 <p>場所：{{ $comment->map->place }}</p>
@@ -95,12 +93,11 @@
             </div>
         </div>
 
-        <div id="myComments" class="nav-cnt">
-            <h3 class="mt-5">自分がコメントした内容</h3>
+        <div id="myComments" class="nav-cnt mt-5">
             <div class="row">
                 @forelse($user->comments as $comment)
                     <div class="col-md-6">
-                        <div class="card mb-2">
+                        <div class="card mb-3">
                             <div class="card-header">
                                 <p>投稿タイトル：{{ $comment->map->date }}</p>
                                 <p>場所：{{ $comment->map->place }}</p>
@@ -123,7 +120,7 @@
 
 @section('scripts')
 <script>
-$(".nav-item a").on('click', function(e) {
+$(".nav-item-show a").on('click', function(e) {
     e.preventDefault();
     $('.nav-cnt').css('display', 'none');
     $('.nav-item a').removeClass('active');

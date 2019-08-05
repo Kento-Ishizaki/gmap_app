@@ -36,4 +36,5 @@ body {
 .nav-tabs .nav-link.active {
     background: #158bba;
     color: #fff;
+    font-weight: bold;
 }
