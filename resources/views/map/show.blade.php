@@ -56,14 +56,18 @@
     @if(!$defaultLiked)
         <form action="{{ route('likes.like',['map' => $map]) }}" method="POST">
         @csrf
-            <input type="submit" value="&#xf004;" class="far">
+            <button class='btn btn-default heart' type='submit'>
+                <i class='far fa-heart faa-wrench animated-hover'></i>
+            </button>
             <span class="likes-count">{{ $likesCount}}</span>
         </form>
     @else
         <form action="{{ route('likes.unlike',['map' => $map]) }}" method="POST">
         @csrf
         @method('DELETE')
-            <input type="submit" value="&#xf004;" class="fas">
+            <button class='btn btn-default heart' type='submit'>
+                <i class='fas fa-heart faa-wrench animated-hover'></i>
+            </button>
             <span class="likes-count">{{ $likesCount }}</span>
         </form>
     @endif

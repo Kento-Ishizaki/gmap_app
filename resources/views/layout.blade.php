@@ -9,8 +9,11 @@
     <link rel="stylesheet" href="{{ secure_asset('/css/app.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('/css/custom.css') }}">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
     @yield('styles')
 </head>
 <body>
