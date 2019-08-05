@@ -12,15 +12,15 @@
             </dt>
             <dd class="col-md-9 py-3"></dd>
             <dt class="col-md-3 py-3">名前</dt>
-            <dd class="col-md-9 py-3">{{ $user->name }}</dd>
+            <dd class="col-md-9 py-3 text-left">{{ $user->name }}</dd>
             <dt class="col-md-3 py-3">メールアドレス</dt>
-            <dd class="col-md-9 py-3">{{ $user->email }}</dd>
+            <dd class="col-md-9 py-3 text-left">{{ $user->email }}</dd>
             <dt class="col-md-3 py-3">年齢</dt>
-            <dd class="col-md-9 py-3">{{ $user->age }}</dd>
+            <dd class="col-md-9 py-3 text-left">{{ $user->age }}</dd>
             <dt class="col-md-3 py-3">性別</dt>
-            <dd class="col-md-9 py-3">{{ $user->sex }}</dd>
+            <dd class="col-md-9 py-3 text-left">{{ $user->sex }}</dd>
             <dt class="col-md-3 py-3">自己紹介</dt>
-            <dd class="col-md-9 py-3">{{ $user->profile }}</dd>
+            <dd class="col-md-9 py-3 text-left">{{ $user->profile }}</dd>
         </dl>
         @if (Auth::user()->id === $user->id)
             <a href="{{ route('users.edit', ['user' => $user]) }}">
