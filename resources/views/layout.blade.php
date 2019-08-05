@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ secure_asset('/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ secure_asset('/css/custom.css') }}">
     <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     @yield('styles')
 </head>
 <body>

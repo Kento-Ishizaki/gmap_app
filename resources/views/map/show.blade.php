@@ -51,6 +51,21 @@
             </tr>
         </tbody>
     </table>
+    <!-- お気に入り機能 -->
+    @if(!$defaultLiked)
+        <form action="{{ route('likes.like',['map' => $map]) }}" method="POST">
+        @csrf
+            <input type="submit" value="&#xf004;" class="far">
+            <span class="likes-count">{{ $likesCount}}</span>
+        </form>
+    @else
+        <form action="{{ route('likes.unlike',['map' => $map]) }}" method="POST">
+        @csrf
+        @method('DELETE')
+            <input type="submit" value="&#xf004;" class="fas">
+            <span class="likes-count">{{ $likesCount }}</span>
+        </form>
+    @endif
     <!-- 投稿者にのみ編集や削除ボタン表示 -->
     @if($user_id === $map->user_id)
         <a href="{{ route('map.edit', ['map' => $map]) }}">

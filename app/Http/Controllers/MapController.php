@@ -31,7 +31,20 @@ class MapController extends Controller
     public function show(Map $map)
     {
         $user_id = Auth::id();
-        return view('map.show', ['map' => $map, 'user_id' => $user_id]);
+        $map->load('likes');
+        $likesCount = count($map->likes);
+        $defaultLiked = $map->likes->where('user_id', $user_id)->first();
+        if($defaultLiked === null) {
+            $defaultLiked = false;
+        } else {
+            $defaultLiked = true;
+        };
+        return view('map.show', [
+            'map' => $map,
+            'user_id' => $user_id,
+            'likesCount' => $likesCount,
+            'defaultLiked' => $defaultLiked
+            ]);
     }
 
     public function edit(Map $map)

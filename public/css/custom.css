@@ -38,3 +38,18 @@ body {
     color: #fff;
     font-weight: bold;
 }
+
+.far {
+    color: #E0245E;
+    font-size: 20px;
+}
+
+.fas {
+    color: #E0245E;
+    font-size: 20px;
+}
+
+.likes-count {
+    color: #E0245E;
+    font-size: 20px;
+}
