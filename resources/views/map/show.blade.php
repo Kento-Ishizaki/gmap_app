@@ -43,7 +43,8 @@
             </tr>
             <tr>
                 <td>詳細</td>
-                <td>{{ $map->content }}</td>
+                <td>{!! nl2br(e($map->content)) !!}</td>
+
             </tr>
             <tr>
                 <td>日付</td>

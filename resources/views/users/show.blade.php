@@ -55,11 +55,10 @@
                 @forelse($user->maps as $map)
                     <div class="col-md-6">
                         <div class="card mb-3">
-                            <div class="card-header">
-                                タイトル：{{ $map->title }}
-                            </div>
                             <div class="card-body">
+                                <p>タイトル：{{ $map->title }}</p>
                                 <p>場所：{{ $map->place }}</p>
+                                <p>内容：{!! nl2br(e($map->content)) !!}</p>
                                 <p>日時：{{ $map->date }}</p>
                                 <a href="{{ route('map.show', ['map' => $map]) }}"><button class="btn btn-outline-primary">詳細</button></a>
                             </div>
@@ -77,9 +76,13 @@
                     <div class="col-md-6">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <p>投稿タイトル：{{ $like->map->title }}</p>
+                                <p>
+                                    <img src="{{ $like->map->user->avatar_image }}" width="50" class="rounded-circle mr-2">
+                                    <a href="{{ route('users.show', ['user' => $like->map->user]) }}">{{ $like->map->user->name }}</a>さん</p>
                             </div>
                             <div class="card-body">
+                                <p>投稿タイトル：{{ $like->map->title }}</p>
+
                                 <p>場所：{{ $like->map->place }}</p>
                                 <p>日付：{{ $like->map->date }}</p>
                                 <a href="{{ route('map.show', ['map' => $like->map->id]) }}"><button class="btn btn-outline-primary">詳細</button></a>
@@ -98,13 +101,19 @@
                     <div class="col-md-6">
                         <div class="card mb-3">
                             <div class="card-header">
+                                <p>
+                                    <img src="{{ $comment->map->user->avatar_image }}" width="50" class="rounded-circle mr-2">
+                                    <a href="{{ route('users.show', ['user' => $comment->map->user]) }}">{{ $comment->map->user->name }}</a>さん</p>
+                                </p>
                                 <p>投稿タイトル：{{ $comment->map->date }}</p>
                                 <p>場所：{{ $comment->map->place }}</p>
                                 <p>日時：{{ $comment->map->date }}</p>
                             </div>
                             <div class="card-body">
-                                <img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">
-                                コメント内容：{{ $comment->body }}
+                                <div>
+                                    <img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">
+                                    コメント内容：{{ $comment->body }}
+                                </div>
                                 <a href="{{ route('map.show', ['map' => $comment->map]) }}"><button class="btn btn-outline-primary">詳細</button></a>
                             </div>
                         </div>
