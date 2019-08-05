@@ -73,17 +73,16 @@
 
         <div id="myFavos" class="nav-cnt mt-5">
             <div class="row">
-                @forelse($user->comments as $comment)
+                @forelse($user->likes as $like)
                     <div class="col-md-6">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <p>投稿タイトル：{{ $comment->map->date }}</p>
-                                <p>場所：{{ $comment->map->place }}</p>
-                                <p>日時：{{ $comment->map->date }}</p>
+                                <p>投稿タイトル：{{ $like->map->title }}</p>
                             </div>
                             <div class="card-body">
-                                <p>コメント内容：{{ $comment->body }}</p>
-                                <a href="{{ route('map.show', ['map' => $comment->map]) }}"><button class="btn btn-outline-primary">詳細</button></a>
+                                <p>場所：{{ $like->map->place }}</p>
+                                <p>日付：{{ $like->map->date }}</p>
+                                <a href="{{ route('map.show', ['map' => $like->map->id]) }}"><button class="btn btn-outline-primary">詳細</button></a>
                             </div>
                         </div>
                     </div>
@@ -104,7 +103,8 @@
                                 <p>日時：{{ $comment->map->date }}</p>
                             </div>
                             <div class="card-body">
-                                <p>コメント内容：{{ $comment->body }}</p>
+                                <img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">
+                                コメント内容：{{ $comment->body }}
                                 <a href="{{ route('map.show', ['map' => $comment->map]) }}"><button class="btn btn-outline-primary">詳細</button></a>
                             </div>
                         </div>

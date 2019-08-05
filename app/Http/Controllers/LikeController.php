@@ -15,7 +15,7 @@ class LikeController extends Controller
         $like = new Like();
         $like->map_id = $map->id;
         $like->user_id = Auth::id();
-        $like->save();
+        $map->likes()->save($like);
         return redirect()->route('map.show', ['map' => $map])->with('success', 'お気に入り登録しました。');
     }
 
