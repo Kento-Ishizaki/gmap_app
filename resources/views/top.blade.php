@@ -7,7 +7,7 @@
         <!-- Jumbotron Header -->
         <div class="jumbotron mb-4 border-warning top-image">
             <div class="bg-mask">
-                <h1 class="display-1">Gmap App</h1>
+                <h1 class="display-1 main-ttl">Gmap App</h1>
                 <p class="h3">グーグルマップAPIを使った予定共有アプリです。</p>
                 <a href="{{ route('map.index') }}" class="btn btn-warning btn-lg">マップを見る</a>
             </div>

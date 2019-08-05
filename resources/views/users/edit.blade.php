@@ -7,9 +7,15 @@
         @method('PUT')
         <div class="form-group">
             <dl class="row">
-                <dt class="col-md-3 py-3"><label for="avatar_image">アイコン</label></dt>
+                <dt class="col-md-3 py-3">
+                    @if ($user->avatar_image)
+                        <img src="{{ $user->avatar_image }}" class="rounded-circle w-25">
+                    @else
+                        <img src="{{ asset("noimage.png") }}" class="rounded-circle w-25">
+                    @endif
+                </dt>
                 <dd class="col-md-9 py-3">
-                    <input type="file" name="avatar_image" id="avatar_image" class="form-group" value="{{ $user->avatar_image }}">
+                    <input type="file" name="avatar_image" id="avatar_image" class="form-group" accept="image/*">
                 </dd>
                 <dt class="col-md-3 py-3"><label for="name">名前</label></dt>
                 <dd class="col-md-9 py-3">

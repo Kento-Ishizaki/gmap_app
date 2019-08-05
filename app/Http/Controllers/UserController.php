@@ -24,11 +24,13 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $image = $request->file('avatar_image');
-        // バケットのuploadsフォルダにアップロード
-        $path = Storage::disk('s3')->putFile('uploads', $image, 'public');
-        // アップした画像のフルパスを取得
-        $user->avatar_image = Storage::disk('s3')->url($path);
+        // if($request->has('avatar_image')) {
+            $image = $request->file('avatar_image');
+            // バケットのuploadsフォルダにアップロード
+            $path = Storage::disk('s3')->putFile('uploads', $image, 'public');
+            // アップした画像のフルパスを取得
+            $user->avatar_image = Storage::disk('s3')->url($path);
+        // }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->age = $request->age;
