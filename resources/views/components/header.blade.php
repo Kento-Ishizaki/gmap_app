@@ -17,7 +17,10 @@
             </li>
         @else
             <li class="nav-item">
-                <a href="{{ route('users.show', ['user' => Auth::user()->id]) }}" class="nav-link">{{ Auth::user()->name }}</a>
+                <a href="{{ route('users.show', ['user' => Auth::id()]) }}" class="nav-link"><img src="{{ Auth::user()->avatar_image }}" class="rounded-circle" width="30"></a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('users.show', ['user' => Auth::id()]) }}" class="nav-link">{{ Auth::user()->name }}</a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('map.index') }}" class="nav-link">マップ</a>
