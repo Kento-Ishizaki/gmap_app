@@ -24,3 +24,16 @@ body {
 .main-ttl {
     text-shadow: 2px 2px #158bba;
 }
+
+#myFavos {
+    display: none;
+}
+
+#myComments {
+    display: none;
+}
+
+.nav-tabs .nav-link.active {
+    background: #158bba;
+    color: #fff;
+}

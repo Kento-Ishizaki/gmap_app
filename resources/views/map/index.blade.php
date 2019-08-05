@@ -23,15 +23,15 @@
             @csrf
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="title">タイトル</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
                         <label for="place">場所</label>
                         <input type="text" name="place" id="place" class="form-control" required>
                         @if($errors->first('place'))
                             <p class="text-danger">{{ $errors->first('place') }}</p>
                         @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="title">タイトル</label>
-                        <input type="text" name="title" id="title" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="content">内容</label>

@@ -5,11 +5,11 @@
     <div class="container-fruid">
 
         <!-- Jumbotron Header -->
-        <div class="jumbotron mb-4 border-warning top-image">
+        <div class="jumbotron mb-4 border-primary top-image">
             <div class="bg-mask">
                 <h1 class="display-1 main-ttl">Gmap App</h1>
-                <p class="h3">グーグルマップAPIを使った予定共有アプリです。</p>
-                <a href="{{ route('map.index') }}" class="btn btn-warning btn-lg">マップを見る</a>
+                <a href="{{ route('map.index') }}" class="btn btn-dark btn-lg">マップを見る</a>
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">ログイン</a>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
             </div>
             <div class="card-footer">
-                <a href="#" class="btn btn-outline-warning">Find Out More!</a>
+                <a href="{{ route('login') }}" class="btn btn-outline-primary">ログイン</a>
             </div>
             </div>
         </div>
