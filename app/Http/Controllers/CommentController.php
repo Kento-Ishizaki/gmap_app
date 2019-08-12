@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Comment;
 use App\Map;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class CommentController extends Controller
 {
@@ -17,13 +18,29 @@ class CommentController extends Controller
      */
     public function store(Request $request, Map $map)
     {
-        $this->validate($request, [
+        $rules = [
             'body' => 'required| max:100'
-        ]);
+        ];
+
+        $messages = [
+            'body.required' => 'コメントを入力して下さい。',
+            'body.max' => '100文字以内で入力して下さい。'
+        ];
+        $error = Validator::make($request->all(), $rules, $messages);
+
+        if($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
         $comment = new Comment(['body' => $request->body]);
         $comment->user_id = Auth::id();
+        $avatar = $comment->user->avatar_image;
+        $name = $comment->user->name;
         $map->comments()->save($comment);
-        return redirect()->action('MapController@show', $map);
+        return response()->json([
+            'success' => 'コメントしました。',
+            'comment' => $comment,
+            'avatar' => $avatar,
+            'name' => $name
+            ]);
     }
-
 }

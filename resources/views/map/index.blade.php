@@ -76,6 +76,11 @@ $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 @section('scripts')
 <script>
 'use strict';
+/*
+===================
+マップ関連
+===================
+*/
 // 新規投稿用フォーム
 var newForm = document.forms.newForm;
 
@@ -154,7 +159,7 @@ function initMap() {
             label: String(locations[i].id)
         });
         // マーカークリックでカード出現
-        google.maps.event.addListener(marker, 'dblclick', (function(marker, i) {
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
                 infowindow.setContent('<div class="card">'+
                     '<div class="card-header">'+
@@ -196,7 +201,7 @@ function initMap() {
         console.log(data.responseText);
     });
 
-    // マップダブルクリックイベント
+    // マップダブルクリックで投稿
     map.addListener('dblclick', function(e) {
         var userId = '<?php echo $auth; ?>';
         if(userId === 'false') {
@@ -210,7 +215,7 @@ function initMap() {
         // クリックした地点の緯度をフォームにセット
         newForm.lat.value = clickLat;
 
-        // // 経度を取得
+        // 経度を取得
         var clickLng = e.latLng.lng();
         // クリックした地点の経度をフォームにセット
         newForm.lng.value = clickLng;
@@ -233,8 +238,8 @@ function initMap() {
             }
         });
     }
-
 }
+// END init.Map
 </script>
 <!-- クラスターのライブラリ読込み -->
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>

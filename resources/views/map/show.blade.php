@@ -84,26 +84,26 @@
 
     <!-- コメントを表示 -->
     <h2 class="mt-5">コメント一覧</h2>
-    @forelse ($map->comments as $comment)
-        <div class="card mb-2">
-            <div class="card-header">
-                <p><img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">投稿者：<a href="{{route('users.show', ['user' => $comment->user->id]) }}">{{ $comment->user->name }}</a></p>
-                投稿日時：{{ $comment->created_at }}
+    <div id="data">
+        @forelse ($map->comments as $comment)
+            <div class="card mb-2 comment">
+                <div class="card-header">
+                    <p><img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">投稿者：<a href="{{route('users.show', ['user' => $comment->user->id]) }}">{{ $comment->user->name }}</a></p>
+                    投稿日時：{{ $comment->created_at }}
+                </div>
+                <div class="card-body">
+                    {{ $comment->body }}
+                </div>
             </div>
-            <div class="card-body">
-                {{ $comment->body }}
-            </div>
-        </div>
-    @empty
-        <p>コメントがありません。</p>
-    @endforelse
-    <form method="POST" action="{{ route('comments.store', $map) }}" name="commentForm">
+        @empty
+            <p>コメントがありません。</p>
+        @endforelse
+    </div>
+    <form method="POST" action="{{ route('comments.store', $map) }}" name="commentForm" id="commentForm">
         @csrf
+        <span id="formResult"></span>
         <div class="form-group">
             <label for="comment">コメントフォーム</label>
-            @if($errors->has('body'))
-                <span class="text-danger">{{ $errors->first('body') }}</span>
-            @endif
             <input type="text" class="form-control w-50 mx-auto" name="body" value="{{ old('body') }}">
         </div>
         <input type="submit" class="btn btn-outline-success w-50" value="コメント">
@@ -121,5 +121,49 @@ flatpickr(document.getElementsByClassName('date'), {
     dateFormat: 'Y/m/d',
     minDate: new Date()
 });
+
+// コメントを非同期で
+$('#commentForm').on('submit', function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: "/map/<?php echo $map->id; ?>/comments",
+        method: "POST",
+        data: new FormData(this),
+        contentType: false,
+        cache: false,
+        processData: false,
+        dataType: "json"
+    })
+    .done((data) => {
+        var html = '';
+        // バリデーションエラー時
+        if(data.errors) {
+            html = '<div class="alert alert-danger"><ul>';
+            for(var i = 0; i < data.errors.length; i++) {
+                html += '<li>' + data.errors[i] + '</li>';
+            }
+            html += '</ul></div>';
+        }
+        // バリデーション通過時
+        if(data.success) {
+            html = '<div class="alert alert-success">' + data.success + '</div>';
+            $('#commentForm')[0].reset();
+            // 最後のコメント後に要素を追加
+            $('#data').append('<div class="card mb-2 comment">' +
+                '<div class="card-header">' +
+                '<p><img src="' + data.avatar + '" width="50" class="rounded-circle mr-2">'+
+                '投稿者：<a href="/users/' + data.comment.user_id + '">' +
+                data.name + '</a></p>' +
+                '投稿日時：' + data.comment.created_at +
+                '</div>' +
+                '<div class="card-body">' +
+                data.comment.body +
+                '</div></div>');
+        }
+        $('#formResult').html(html);
+    });
+});
+
+
 </script>
 @endsection
