@@ -13,7 +13,8 @@
 <div id="map"></div>
 <div style="text-align: center;">
     <input id="address" type="textbox" value="東京駅" class="py-2">
-    <input id="search" type="button" value="検索" class="py-2 btn btn-warning">
+    <button id="search" class="py-2 btn btn-warning">検索</button>
+    <button id="here" class="py-2 btn btn-warning">現在地</button>
 </div>
 <!-- 新規用モーダル -->
 <div class="modal fade" id="form-new" role="dialog">
@@ -100,6 +101,34 @@ function initMap() {
        geocodeAddress(geocoder, map); 
     });
 
+    // 現在地ボタンのクリックイベント
+    document.getElementById('here').addEventListener('click', function() {
+        if(navigator.geolocation) {
+            window.navigator.geolocation.getCurrentPosition(function(result) {
+                // 現在地の取得成功
+                var position = result.coords,
+                    radius = position.accuracy,
+                    latLng = new google.maps.LatLng(position.latitude, position.longitude),
+
+                // 現在地に小さい円を書く
+                    circle = {
+                        center: latLng,
+                        radius: 3,
+                        map: map,
+                        strokeColor: '#44BBFF',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 1,
+                        fillColor: '#44BBFF',
+                        fillOpacity: 0.8
+                    },
+                    circle = new google.maps.Circle(circle);
+                    // ズームして現在地へ移動
+                    map.setZoom(16);
+                    map.setCenter(latLng);                    
+            });
+        }
+    });
+
     $.ajax({
         type: 'GET',
         url: '/api/map',
@@ -108,7 +137,7 @@ function initMap() {
     .done((data) => {
         // DBのmap情報を変数に代入
         var mapData = data;
-        var locations = [
+        var locations = [ //この辺不要かも
             mapData
         ];
         // ネストしてない連想配列を代入
@@ -125,7 +154,7 @@ function initMap() {
             label: String(locations[i].id)
         });
         // マーカークリックでカード出現
-        google.maps.event.addListener( marker, 'dblclick', (function(marker, i) {
+        google.maps.event.addListener(marker, 'dblclick', (function(marker, i) {
             return function() {
                 infowindow.setContent('<div class="card">'+
                     '<div class="card-header">'+
