@@ -52,7 +52,6 @@ class UserUpdateRequest extends FormRequest
             'age' => '年齢',
             'sex' => '性別',
             'profile' => '自己紹介',
-            ''
         ];
     }
 }

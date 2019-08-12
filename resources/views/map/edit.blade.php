@@ -8,34 +8,37 @@
 @section('content')
 <div class="container mt-3">
     <h2 class="text-center">編集</h2>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     <form action="{{ route('map.update', ['map' => $map]) }}" method="POST">
     @csrf
     @method('PUT')
         <div class="modal-body">
             <div class="form-group">
                 <label for="place">場所</label>
-                <input type="text" name="place" id="place" class="form-control" value="{{ $map->place }}">
+                <input type="text" name="place" id="place" class="form-control" value="{{ old('place', $map->place) }}">
             </div>
             <div class="form-group">
                 <label for="title">タイトル</label>
-            <input type="text" name="title" id="title" class="form-control" value="{{ $map->title }}">
+            <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $map->title) }}">
             </div>
             <div class="form-group">
                 <label for="content">内容</label>
-                <textarea name="content" id="content" rows="3" class="form-control">{{ $map->content }}</textarea>
+                <textarea name="content" id="content" rows="3" class="form-control">{{ old('content', $map->content) }}</textarea>
             </div>
             <div class="form-group col-md-6">
                 <label for="date">日付</label>
-                <input type="text" id="date" name="date" class="form-control date bg-light" value="{{ $map->date }}">
+                <input type="text" id="date" name="date" class="form-control date bg-light" value="{{ old('date', $map->date) }}">
             </div>
-            <div class="form-group col-md-6 col-md-offset-6">
-                <label for="lat">緯度</label>
-                <input type="text" id="lat" name="lat" class="form-control" value="{{ $map->lat }}">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="lng">経度</label>
-                <input type="text" id="lng" name="lng" class="form-control" value="{{ $map->lng }}">
-            </div>
+            <input type="hidden" id="lat" name="lat" class="form-control" value="{{ $map->lat }}">
+            <input type="hidden" id="lng" name="lng" class="form-control" value="{{ $map->lng }}">
             <button type="submit" class="btn btn-outline-primary w-50 mb-2">送信</button>
         </div>
     </form>

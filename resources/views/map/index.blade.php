@@ -42,14 +42,8 @@
                         <label for="date">日付</label>
                         <input type="text" id="date" name="date" class="form-control bg-light date">
                     </div>
-                    <div class="form-group col-md-6 col-md-offset-6">
-                        <label for="lat">緯度</label>
-                        <input type="text" id="lat" name="lat" class="form-control" readonly>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="lng">経度</label>
-                        <input type="text" id="lng" name="lng" class="form-control" readonly>
-                    </div>
+                    <input type="hidden" id="lat" name="lat" class="form-control">
+                    <input type="hidden" id="lng" name="lng" class="form-control">
                     <button type="submit" class="btn btn-outline-primary" id="submit">送信</button>
                 </div>
             </form>

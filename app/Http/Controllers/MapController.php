@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Map;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\MapUpdateRequest;
 
 class MapController extends Controller
 {
@@ -53,7 +54,7 @@ class MapController extends Controller
         return view('map.edit', ['map' => $map]);
     }
 
-    public function update(Request $request, Map $map)
+    public function update(MapUpdateRequest $request, Map $map)
     {
       $map->user_id = Auth::id();
       $map->place = $request->place;

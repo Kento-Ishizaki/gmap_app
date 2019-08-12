@@ -101,7 +101,7 @@
     </div>
     <form method="POST" action="{{ route('comments.store', $map) }}" name="commentForm" id="commentForm">
         @csrf
-        <span id="formResult"></span>
+        <span id="commentResult"></span>
         <div class="form-group">
             <label for="comment">コメントフォーム</label>
             <input type="text" class="form-control w-50 mx-auto" name="body" value="{{ old('body') }}">
@@ -138,7 +138,8 @@ $('#commentForm').on('submit', function(e) {
         var html = '';
         // バリデーションエラー時
         if(data.errors) {
-            html = '<div class="alert alert-danger"><ul>';
+            html = '<div class="alert alert-danger alert-dismissible fade show">' + 
+                   '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button><ul>';
             for(var i = 0; i < data.errors.length; i++) {
                 html += '<li>' + data.errors[i] + '</li>';
             }
@@ -146,7 +147,9 @@ $('#commentForm').on('submit', function(e) {
         }
         // バリデーション通過時
         if(data.success) {
-            html = '<div class="alert alert-success">' + data.success + '</div>';
+            html = '<div class="alert alert-primary alert-dismissible fade show">' + 
+                   '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>' +
+                   data.success + '</div>';
             $('#commentForm')[0].reset();
             // 最後のコメント後に要素を追加
             $('#data').append('<div class="card mb-2 comment">' +
@@ -160,7 +163,7 @@ $('#commentForm').on('submit', function(e) {
                 data.comment.body +
                 '</div></div>');
         }
-        $('#formResult').html(html);
+        $('#commentResult').html(html);
     });
 });
 
