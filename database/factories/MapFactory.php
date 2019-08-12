@@ -11,10 +11,8 @@ $factory->define(Map::class, function (Faker $faker) {
         'place' => $faker->city,
         'title' => $faker->sentence,
         'content' => $faker->paragraph,
-        'date' => $faker->datetime($min = 'now', $timezone = date_default_timezone_get()),
-        'lat' => $faker->latitude,
-        'lng' => $faker->longitude,
-        'created_at' => $faker->datetime($max = 'now', $timezone = date_default_timezone_get()),
-        'updated_at' => $faker->datetime($max = 'now', $timezone = date_default_timezone_get()),
+        'date' => $faker->dateTimeBetween('0years', '1years'),
+        'lat' => $faker->latitude($min = '32', $max = '45'),
+        'lng' => $faker->longitude($min = '135', $max = '145'),
     ];
 });

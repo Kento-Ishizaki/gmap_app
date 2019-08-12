@@ -16,19 +16,9 @@ class MapController extends Controller
      */
     public function index()
     {
-        $maps = Map::with(['user'])->get();
+        $today = date('Y-m-d');
+        $maps = Map::with(['user'])->where('date', '>=', $today)->get();
         return json_encode($maps, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
