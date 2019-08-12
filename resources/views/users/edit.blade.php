@@ -2,6 +2,16 @@
 
 @section('content')
     <div class="container mt-3">
+        <h2 class="text-center">ユーザー編集</h2>
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('users.update', ['user' => $user]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -17,19 +27,19 @@
                 <dd class="col-md-9 py-3">
                     <input type="file" name="avatar_image" id="avatar_image" class="form-group" accept="image/*">
                 </dd>
-                <dt class="col-md-3 py-3"><label for="name">名前</label></dt>
+                <dt class="col-md-3 py-3"><label for="name">名前　※必須</label></dt>
                 <dd class="col-md-9 py-3">
-                    <input type="text" name="name" id="name" class="form-group w-75 py-1" value="{{ $user->name }}">
+                    <input type="text" name="name" id="name" class="form-group w-75 py-1" value="{{ old('name', $user->name) }}">
                 </dd>
-                <dt class="col-md-3 py-3"><label for="email">メールアドレス</label></dt>
+                <dt class="col-md-3 py-3"><label for="email">メールアドレス　※必須</label></dt>
                 <dd class="col-md-9 py-3">
-                    <input type="email" name="email" id="email" class="form-group w-75 py-1" value="{{ $user->email }}">
+                    <input type="email" name="email" id="email" class="form-group w-75 py-1" value="{{ old('email', $user->email) }}">
                 </dd>
                 <dt class="col-md-3 py-3"><label for="age">年齢</label></dt>
                 <dd class="col-md-9 py-3">
-                    <input type="number" name="age" id="age" class="form-group w-75 py-1" value="{{ $user->age }}">
+                    <input type="number" name="age" id="age" class="form-group w-75 py-1" value="{{ old('age', $user->age) }}">
                 </dd>
-                <dt class="col-md-3 py-3"><label for="sex">性別</label></dt>
+                <dt class="col-md-3 py-3"><label for="sex">性別　※必須</label></dt>
                 <dd class="col-md-9 py-3">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="sex" id="sex1" value="男性" {{ $user->sex === '男性' ? 'checked' : '' }}>
@@ -42,7 +52,7 @@
                 </dd>
                 <dt class="col-md-3 py-3"><label for="profile">自己紹介</label></dt>
                 <dd class="col-md-9 py-3">
-                    <textarea name="profile" id=profile class="form-group w-100 py-1" rows="3">{{ $user->profile }}</textarea>
+                    <textarea name="profile" id=profile class="form-group w-100 py-1" rows="3">{{ old('profile', $user->profile) }}</textarea>
                 </dd>
             </dl>
         </div>

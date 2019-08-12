@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserUpdateRequest;
 // S3を使うための記述
 use Storage;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ class UserController extends Controller
         return view('users.edit', ['user' => $user]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         if($request->has('avatar_image')) {
             $image = $request->file('avatar_image');

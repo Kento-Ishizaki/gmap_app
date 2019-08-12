@@ -18,11 +18,12 @@ class CommentController extends Controller
     public function store(Request $request, Map $map)
     {
         $this->validate($request, [
-            'body' => 'required'
+            'body' => 'required| max:100'
         ]);
         $comment = new Comment(['body' => $request->body]);
         $comment->user_id = Auth::id();
         $map->comments()->save($comment);
         return redirect()->action('MapController@show', $map);
     }
+
 }
