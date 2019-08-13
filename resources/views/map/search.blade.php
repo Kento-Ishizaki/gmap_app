@@ -10,7 +10,7 @@
 </style>
 @endsection
 @section('content')
-<form action="/api/map/search" method="POST">
+<form action="{{ route('map.search') }}" method="POST">
 @csrf
     <input type="text" name="search" class="py-2 date" placeholder="日付で絞り込み">
     <button type="submit" class="py-2 btn btn-warning" id="dateSearch">検索</button>
@@ -129,24 +129,16 @@ function initMap() {
             });
         }
     });
-
-    $.ajax({
-        type: 'GET',
-        url: '/api/map/search',
-        dataType: 'json',
-    })
-    .done((data) => {
-        // DBのmap情報を変数に代入
-        var mapData = data;
-        var locations = [
-            mapData
-        ];
-        // ネストしてない連想配列を代入
-        var locations = locations[0];
-        var mcs = [];
-        var infowindow = new google.maps.InfoWindow();
-        // 投稿の文だけ繰り返し
-        for (var i = 0; i < locations.length; i++) {
+    var mapData = <?php echo json_encode($maps); ?>;
+    var locations = [
+        mapData
+    ];
+    // ネストしてない連想配列を代入
+    var locations = locations[0];
+    var mcs = [];
+    var infowindow = new google.maps.InfoWindow();
+    // 投稿の文だけ繰り返し
+    for (var i = 0; i < locations.length; i++) {
         // マーカー作成
         var marker = new google.maps.Marker( {
             position: new google.maps.LatLng( locations[i].lat, locations[i].lng),
@@ -186,16 +178,11 @@ function initMap() {
         })(marker, i));
         mcs.push(marker);
     }
-        // マーカーをクラスターにする
-        var markerCluster = new MarkerClusterer(
-        map, mcs,
-        { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
+    // マーカーをクラスターにする
+    var markerCluster = new MarkerClusterer(
+    map, mcs,
+    { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
     );
-
-    })
-    .fail((data) => {
-        console.log(data.responseText);
-    });
 
     // マップダブルクリックで投稿
     map.addListener('dblclick', function(e) {

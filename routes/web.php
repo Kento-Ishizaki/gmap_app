@@ -25,4 +25,4 @@ Route::delete('/map/{map}/unlike','LikeController@unlike')->middleware('auth')->
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/map/search', 'MapController@search')->middleware('auth')->name('map.search');
+Route::post('/map/search', 'MapController@search')->middleware('auth')->name('map.search');

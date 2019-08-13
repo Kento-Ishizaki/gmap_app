@@ -32,12 +32,4 @@ class MapController extends Controller
         $map = map::find($id);
         return json_encode($map, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
     }
-
-    // public function search(Request $request)
-    // {
-    //     $maps = Map::with(['user'])->where('date', $request->search)->get();
-    //     $maps = json_encode($maps, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-    //     echo $maps;
-    //     return view('map.search', ['maps' => $maps]);
-    // }
 }

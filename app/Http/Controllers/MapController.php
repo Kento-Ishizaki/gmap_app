@@ -72,4 +72,12 @@ class MapController extends Controller
         $map->delete();
         return redirect()->route('map.index')->with('danger', '削除しました。');
     }
+
+    public function search(Request $request)
+    {
+        $maps = Map::with(['user'])->where('date', $request->search)->get();
+        // $maps = json_encode($maps, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+        // dd($maps);
+        return view('map.search',['maps' => $maps]);
+    }
 }

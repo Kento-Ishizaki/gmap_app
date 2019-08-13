@@ -19,7 +19,7 @@
         </ul>
     </div>
 @endif
-<form action="/api/map/search" method="POST">
+<form action="{{ route('map.search') }}" method="POST">
 @csrf
     <input type="text" name="search" class="py-2 date" placeholder="日付で絞り込み">
     <button type="submit" class="py-2 btn btn-warning" id="dateSearch">検索</button>
@@ -153,7 +153,6 @@ function initMap() {
         var locations = [
             mapData
         ];
-        console.log(locations);
         // ネストしてない連想配列を代入
         var locations = locations[0];
         var mcs = [];
