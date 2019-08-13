@@ -10,6 +10,15 @@
 </style>
 @endsection
 @section('content')
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div id="map"></div>
 <div style="text-align: center;">
     <input id="address" type="textbox" value="東京駅" class="py-2">
@@ -136,7 +145,7 @@ function initMap() {
     .done((data) => {
         // DBのmap情報を変数に代入
         var mapData = data;
-        var locations = [ //この辺不要かも
+        var locations = [
             mapData
         ];
         // ネストしてない連想配列を代入
