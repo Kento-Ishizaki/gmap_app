@@ -56,20 +56,20 @@ class MapController extends Controller
 
     public function update(MapPostRequest $request, Map $map)
     {
-      $map->user_id = Auth::id();
-      $map->place = $request->place;
-      $map->title = $request->title;
-      $map->content = $request->content;
-      $map->date = $request->date;
-      $map->lat = $request->lat;
-      $map->lng = $request->lng;
-      $map->save();
-      return redirect()->route('map.index')->with('success', '編集が完了しました。');
+        $map->user_id = Auth::id();
+        $map->place = $request->place;
+        $map->title = $request->title;
+        $map->content = $request->content;
+        $map->date = $request->date;
+        $map->lat = $request->lat;
+        $map->lng = $request->lng;
+        $map->save();
+        return redirect()->route('map.index')->with('success', '編集が完了しました。');
     }
 
     public function destroy(Map $map)
     {
-      $map->delete();
-      return redirect()->route('map.index')->with('danger', '削除しました。');
+        $map->delete();
+        return redirect()->route('map.index')->with('danger', '削除しました。');
     }
 }

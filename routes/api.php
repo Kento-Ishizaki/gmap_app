@@ -21,3 +21,5 @@ Route::group(['middleware' => ['api']], function() {
     Route::resource('map', 'Api\MapController', ['except' => ['create', 'edit']]);
 });
 
+Route::POST('/map/search','Api\MapController@search')->middleware('api')->name('map.search');
+

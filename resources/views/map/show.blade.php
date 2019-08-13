@@ -93,10 +93,19 @@
                 </div>
                 <div class="card-body">
                     {{ $comment->body }}
+                    @if($comment->user_id === Auth::id())
+                        <form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="POST">
+                        @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger" id="commentDelete" onclick="return confirm('本当に削除して宜しいですか？');">
+                                削除
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
         @empty
-            <p>コメントがありません。</p>
+            <p id="noComment">コメントがありません。</p>
         @endforelse
     </div>
     <form method="POST" action="{{ route('comments.store', $map) }}" name="commentForm" id="commentForm">
@@ -147,6 +156,7 @@ $('#commentForm').on('submit', function(e) {
         }
         // バリデーション通過時
         if(data.success) {
+            $('#noComment').remove();
             html = '<div class="alert alert-primary alert-dismissible fade show">' + 
                    '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>' +
                    data.success + '</div>';
@@ -161,12 +171,17 @@ $('#commentForm').on('submit', function(e) {
                 '</div>' +
                 '<div class="card-body">' +
                 data.comment.body +
+                '<form action="/map/' + data.comment.id + '/comments"' + ' method="POST">' +
+                '@csrf' +
+                '@method("DELETE")' +
+                '<button type="submit" class="btn btn-outline-danger" id="commentDelete" onclick="return confirm(`本当に削除して宜しいですか？`);">' +
+                '削除' +
+                '</button>' +
+                '</form>' +
                 '</div></div>');
         }
         $('#commentResult').html(html);
     });
 });
-
-
 </script>
 @endsection

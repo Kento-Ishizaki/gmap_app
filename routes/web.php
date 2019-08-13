@@ -18,8 +18,11 @@ Route::get('/', function() {
 Route::resource('users', 'UserController');
 Route::resource('map', 'MapController');
 Route::post('/map/{map}/comments', 'CommentController@store')->middleware('auth')->name('comments.store');
+Route::delete('/map/{map}/comments', 'CommentController@destroy')->middleware('auth')->name('comments.destroy');
 Auth::routes();
 Route::post('/map/{map}/like','LikeController@like')->middleware('auth')->name('likes.like');
 Route::delete('/map/{map}/unlike','LikeController@unlike')->middleware('auth')->name('likes.unlike');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/map/search', 'MapController@search')->middleware('auth')->name('map.search');

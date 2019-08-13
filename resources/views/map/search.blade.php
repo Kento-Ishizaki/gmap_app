@@ -10,15 +10,6 @@
 </style>
 @endsection
 @section('content')
-@if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 <form action="/api/map/search" method="POST">
 @csrf
     <input type="text" name="search" class="py-2 date" placeholder="日付で絞り込み">
@@ -44,9 +35,6 @@
                     <div class="form-group">
                         <label for="place">場所</label>
                         <input type="text" name="place" id="place" class="form-control" required>
-                        @if($errors->first('place'))
-                            <p class="text-danger">{{ $errors->first('place') }}</p>
-                        @endif
                     </div>
                     <div class="form-group">
                         <label for="content">内容</label>
@@ -144,7 +132,7 @@ function initMap() {
 
     $.ajax({
         type: 'GET',
-        url: '/api/map',
+        url: '/api/map/search',
         dataType: 'json',
     })
     .done((data) => {
@@ -153,7 +141,6 @@ function initMap() {
         var locations = [
             mapData
         ];
-        console.log(locations);
         // ネストしてない連想配列を代入
         var locations = locations[0];
         var mcs = [];

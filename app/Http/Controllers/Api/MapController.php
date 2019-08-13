@@ -30,29 +30,14 @@ class MapController extends Controller
     public function show($id)
     {
         $map = map::find($id);
-        return $map;
+        return json_encode($map, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    // public function search(Request $request)
+    // {
+    //     $maps = Map::with(['user'])->where('date', $request->search)->get();
+    //     $maps = json_encode($maps, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+    //     echo $maps;
+    //     return view('map.search', ['maps' => $maps]);
+    // }
 }

@@ -43,4 +43,12 @@ class CommentController extends Controller
             'name' => $name
             ]);
     }
+
+    public function destroy($id, Request $request)
+    {
+        $comment = Comment::find($id);
+        $map = $comment->map_id;
+        $comment->delete();
+        return redirect()->route('map.show', ['map' => $map])->with('danger', 'コメントを削除しました。');
+    }
 }
