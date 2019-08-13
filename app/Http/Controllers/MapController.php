@@ -76,8 +76,7 @@ class MapController extends Controller
     public function search(Request $request)
     {
         $maps = Map::with(['user'])->where('date', $request->search)->get();
-        // $maps = json_encode($maps, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-        // dd($maps);
+        $maps = json_encode($maps);
         return view('map.search',['maps' => $maps]);
     }
 }

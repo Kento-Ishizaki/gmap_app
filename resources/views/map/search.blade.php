@@ -125,11 +125,11 @@ function initMap() {
                     circle = new google.maps.Circle(circle);
                     // ズームして現在地へ移動
                     map.setZoom(16);
-                    map.setCenter(latLng);                    
+                    map.setCenter(latLng);
             });
         }
     });
-    var mapData = <?php echo json_encode($maps); ?>;
+    var mapData = <?php echo $maps; ?>;
     var locations = [
         mapData
     ];
