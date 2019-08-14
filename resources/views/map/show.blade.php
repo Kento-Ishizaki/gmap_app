@@ -118,6 +118,15 @@
         <input type="submit" class="btn btn-outline-success w-50" value="コメント">
     </form>
 </div>
+@if(Auth::check())
+    @php
+        $auth = 'true';
+    @endphp
+@else
+    @php
+        $auth = 'false';
+    @endphp
+@endif
 @endsection
 
 @section('scripts')
@@ -133,6 +142,11 @@ flatpickr(document.getElementsByClassName('date'), {
 
 // コメントを非同期で
 $('#commentForm').on('submit', function(e) {
+    var userId = '<?php echo $auth; ?>';
+    if(userId === 'false') {
+        alert('予定を登録するにはログインが必要です。');
+        return false;
+    }
     e.preventDefault();
     $.ajax({
         url: "/map/<?php echo $map->id; ?>/comments",

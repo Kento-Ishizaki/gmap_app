@@ -21,7 +21,7 @@
 @endif
 <form action="{{ route('map.search') }}" method="POST">
 @csrf
-    <input type="text" name="search" class="py-2 date" placeholder="日付で絞り込み">
+    <input type="text" name="search" class="py-2 date w-50" placeholder="日付で絞り込み">
     <button type="submit" class="py-2 btn btn-warning" id="dateSearch">検索</button>
 </form>
 <div id="map"></div>
