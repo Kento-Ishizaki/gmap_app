@@ -236,7 +236,7 @@ function initMap() {
 flatpickr(document.getElementsByClassName('date'), {
     locale: 'ja',
     dateFormat: 'Y/m/d',
-    minDate: new Date()
+    minDate: 'today'
 });
 var submit = document.getElementById('submit');
 submit.addEventListener('click', function(e) {

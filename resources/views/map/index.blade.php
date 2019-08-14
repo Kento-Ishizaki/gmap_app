@@ -21,7 +21,7 @@
 @endif
 <form action="{{ route('map.search') }}" method="POST">
 @csrf
-    <input type="text" name="search" class="py-2 date w-50" placeholder="日付で絞り込み">
+    <input type="date" name="search" class="py-2 date w-25" placeholder="日付で絞り込み">
     <button type="submit" class="py-2 btn btn-warning" id="dateSearch">検索</button>
 </form>
 <div id="map"></div>
@@ -261,7 +261,7 @@ function initMap() {
 flatpickr(document.getElementsByClassName('date'), {
     locale: 'ja',
     dateFormat: 'Y/m/d',
-    minDate: new Date()
+    minDate: 'today'
 });
 var submit = document.getElementById('submit');
 submit.addEventListener('click', function(e) {

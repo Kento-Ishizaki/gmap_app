@@ -53,7 +53,7 @@
 flatpickr(document.getElementsByClassName('date'), {
     locale: 'ja',
     dateFormat: 'Y/m/d',
-    minDate: new Date()
+    minDate: 'today'
 });
 </script>
     
