@@ -124,20 +124,20 @@ function initMap() {
                     latLng = new google.maps.LatLng(position.latitude, position.longitude),
 
                 // 現在地に小さい円を書く
-                    circle = {
-                        center: latLng,
-                        radius: 10,
-                        map: map,
-                        strokeColor: '#44BBFF',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 1,
-                        fillColor: '#44BBFF',
-                        fillOpacity: 0.8
-                    },
-                    circle = new google.maps.Circle(circle);
-                    // ズームして現在地へ移動
-                    map.setZoom(16);
-                    map.setCenter(latLng);                    
+                circle = {
+                    center: latLng,
+                    radius: 10,
+                    map: map,
+                    strokeColor: '#44BBFF',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 1,
+                    fillColor: '#44BBFF',
+                    fillOpacity: 0.8
+                },
+                circle = new google.maps.Circle(circle);
+                // ズームして現在地へ移動
+                map.setZoom(16);
+                map.setCenter(latLng);                    
             });
         }
     });

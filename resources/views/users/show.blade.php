@@ -103,7 +103,7 @@
                             <div class="card-header">
                                 <p>
                                     <img src="{{ $comment->map->user->avatar_image }}" width="50" class="rounded-circle mr-2">
-                                    <a href="{{ route('users.show', ['user' => $comment->map->user]) }}">{{ $comment->map->user->name }}</a>さん</p>
+                                    投稿者名：<a href="{{ route('users.show', ['user' => $comment->map->user]) }}">{{ $comment->map->user->name }}</a>さん</p>
                                 </p>
                                 <p>投稿タイトル：{{ $comment->map->date }}</p>
                                 <p>場所：{{ $comment->map->place }}</p>
@@ -112,7 +112,7 @@
                             <div class="card-body">
                                 <div>
                                     <img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">
-                                    コメント内容：{{ $comment->body }}
+                                    自分のコメント：{{ $comment->body }}
                                 </div>
                                 <a href="{{ route('map.show', ['map' => $comment->map]) }}"><button class="btn btn-outline-primary">詳細</button></a>
                             </div>
