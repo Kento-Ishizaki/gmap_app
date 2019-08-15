@@ -21,14 +21,14 @@
 @endif
 <form action="{{ route('map.search') }}" method="POST">
 @csrf
-    <input type="date" name="search" class="py-2 date w-25" placeholder="日付で絞り込み">
-    <button type="submit" class="py-2 btn btn-warning" id="dateSearch">検索</button>
+    <input type="text" name="search" class="py-2 date" placeholder="日付で絞り込み">
+    <button type="submit" class="py-2 btn btn-warning" id="dateSearch">日付で検索</button>
 </form>
 <div id="map"></div>
 <div style="text-align: center;">
     <input id="address" type="textbox" value="東京駅" class="py-2">
     <button id="search" class="py-2 btn btn-warning">検索</button>
-    <button id="here" class="py-2 btn btn-warning">現在地</button>
+    <button id="here" class="py-2 btn btn-primary">現在地</button>
 </div>
 <!-- 新規用モーダル -->
 <div class="modal fade" id="form-new" role="dialog">

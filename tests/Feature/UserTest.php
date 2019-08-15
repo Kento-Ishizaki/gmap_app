@@ -26,7 +26,7 @@ class UserTest extends TestCase
             ->assertOk();
     }
 
-    public function test_ユーザー１と２が見れる()
+    public function test_ユーザー１と２を登録してその情報が見れる()
     {
         $first = factory(User::class)->create();
         $second = factory(User::class)->create();
@@ -37,7 +37,6 @@ class UserTest extends TestCase
         $response = $this->get('/users/1');
         $response
             ->assertSee($first->name)
-            ->assertSee($first->email)
             ->assertSee($first->sex)
             ->assertOk();
 
@@ -50,5 +49,29 @@ class UserTest extends TestCase
             ->assertOk();
     }
 
-    
+    public function test_usersにアクセスが来たらマップにリダイレクト()
+    {
+        $response = $this->get('/users')
+            ->assertRedirect('/map');
+    }
+
+    public function test_DELETEリクエストでデータを削除できる()
+    {
+        $first = factory(User::class)->create();
+        $response = $this->assertCount(1, User::all());
+        $response = $this->delete(route('users.destroy', ['user' => 1]));
+        $response = $this->get('/user/1');
+        $response->assertStatus(404);
+    }
+
+    public function test_POSTリクエストを送信できる()
+    {
+        $response = $this->post('/register', [
+            'name' => 'サンプルユーザー',
+            'email' => 'sample@sample.com',
+            'password' => 'password',
+        ]);
+        $response->assertStatus(302);
+    }
+
 }
