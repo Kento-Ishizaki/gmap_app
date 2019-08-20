@@ -1,7 +1,5 @@
-@extends('layout')
+@extends('errors::illustrated-layout')
 
-@section('content')
-<div class="container my-5">
-    <p class="h1 text-danger">ページが見つかりません。</p>
-</div>
-@endsection
+@section('title', __('Not Found'))
+@section('code', '404')
+@section('message', __('ページが見つかりません'))
