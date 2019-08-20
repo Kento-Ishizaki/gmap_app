@@ -49,6 +49,16 @@ class UserTest extends TestCase
             ->assertOk();
     }
 
+    public function test_を削除できる()
+    {
+        $first = factory(User::class)->create();
+        $first->save();
+
+        // ユーザー１のテスト
+        $this->delete('/users/1')
+            ->assertStatus(302);
+    }
+
     public function test_usersにアクセスが来たらマップにリダイレクト()
     {
         $response = $this->get('/users')

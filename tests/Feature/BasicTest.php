@@ -15,6 +15,14 @@ class BasicTest extends TestCase
         $response
             ->assertSee('Gmap App')
             ->assertSee('login')
-            ->assertStatus(200);
+            ->assertOk();
+    }
+
+    public function test_httpステータスが正常に返ってくる()
+    {
+        $this->get('/sample')->assertStatus(404);
+        $this->get('/login')->assertOk();
+        $this->get('/register')->assertOk();
+        $this->post('/register')->assertStatus(302);
     }
 }

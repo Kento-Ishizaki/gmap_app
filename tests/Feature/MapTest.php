@@ -19,7 +19,7 @@ class MapTest extends TestCase
         $response
             ->assertSee('日付で検索')
             ->assertSee('検索')
-            ->assertStatus(200);
+            ->assertOk();
     }
 
     public function test_データを保存できる()
@@ -28,7 +28,7 @@ class MapTest extends TestCase
         $second = factory(Map::class)->create();
 
         $response = $this->get('/map');
-        $response->assertStatus(200);
+        $response->assertOk();
     }
 
     // public function test_POSTリクエストを送信できる()
