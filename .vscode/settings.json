@@ -1,0 +1,6 @@
+{
+    "phpformatter.composer": true,
+    "phpformatter.arguments": [
+        "--rules=@PSR2"
+    ]
+}

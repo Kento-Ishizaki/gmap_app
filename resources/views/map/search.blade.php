@@ -4,29 +4,30 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
 <style>
-#map {
-    height: 500px;
-}
+    #map {
+        height: 500px;
+    }
+
 </style>
 @endsection
 @section('content')
 <form action="{{ route('map.search') }}" method="POST">
-@csrf
-    <input type="text" name="search" class="py-2 date" placeholder="日付で絞り込み">
-    <button type="submit" class="py-2 btn btn-warning" id="dateSearch">日付で検索</button>
+    @csrf
+    <input type="text" name="search" class="py-2 date border-secondary" placeholder="日付で絞り込み">
+    <button type="submit" class="py-2 btn btn-dark" id="dateSearch">日付で検索</button>
 </form>
 <div id="map"></div>
 <div style="text-align: center;">
-    <input id="address" type="textbox" value="東京駅" class="py-2">
-    <button id="search" class="py-2 btn btn-warning">検索</button>
-    <button id="here" class="py-2 btn btn-primary">現在地</button>
+    <input id="address" type="textbox" value="東京駅" class="py-2 border-secondary">
+    <button id="search" class="py-2 btn btn-dark">検索</button>
+    <button id="here" class="py-2 btn btn-secondary">現在地</button>
 </div>
 <!-- 新規用モーダル -->
 <div class="modal fade" id="form-new" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="{{route('map.store') }}" method="POST" name="newForm">
-            @csrf
+                @csrf
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="title">タイトル</label>
@@ -59,33 +60,36 @@ $google_api_key = env('MIX_GOOGLE_MAP_API_KEY');
 @endphp
 
 @if(Auth::check())
-    @php
-        $auth = 'true';
-    @endphp
+@php
+$auth = 'true';
+@endphp
 @else
-    @php
-        $auth = 'false';
-    @endphp
+@php
+$auth = 'false';
+@endphp
 @endif
 
 @endsection
 @section('scripts')
 <script>
-'use strict';
-/*
-===================
-マップ関連
-===================
-*/
-// 新規投稿用フォーム
-var newForm = document.forms.newForm;
+    'use strict';
+    /*
+    ===================
+    マップ関連
+    ===================
+    */
+    // 新規投稿用フォーム
+    var newForm = document.forms.newForm;
 
-function initMap() {
-    // マップ表示ターゲット
-    var target = document.getElementById('map');
-    // デフォルト中心位置
-    var park = {lat: 35.732013, lng: 139.674847};
-    var map = new google.maps.Map(target, {
+    function initMap() {
+        // マップ表示ターゲット
+        var target = document.getElementById('map');
+        // デフォルト中心位置
+        var park = {
+            lat: 35.732013,
+            lng: 139.674847
+        };
+        var map = new google.maps.Map(target, {
             zoom: 11,
             center: park,
             // デフォルトのコントローラーを無効
@@ -93,139 +97,146 @@ function initMap() {
             // ズームコントローラーのみ有効
             zoomControl: true,
             // ダブルクリックでのズームを無効
-            disableDoubleClickZoom: true});
-    // 検索機能
-    var geocoder = new google.maps.Geocoder();
+            disableDoubleClickZoom: true
+        });
+        // 検索機能
+        var geocoder = new google.maps.Geocoder();
 
-    // 検索ボタンのクリックイベント
-    document.getElementById('search').addEventListener('click', function() {
-       geocodeAddress(geocoder, map); 
-    });
+        // 検索ボタンのクリックイベント
+        document.getElementById('search').addEventListener('click', function () {
+            geocodeAddress(geocoder, map);
+        });
 
-    // 現在地ボタンのクリックイベント
-    document.getElementById('here').addEventListener('click', function() {
-        if(navigator.geolocation) {
-            window.navigator.geolocation.getCurrentPosition(function(result) {
-                // 現在地の取得成功
-                var position = result.coords,
-                    radius = position.accuracy,
-                    latLng = new google.maps.LatLng(position.latitude, position.longitude),
+        // 現在地ボタンのクリックイベント
+        document.getElementById('here').addEventListener('click', function () {
+            if (navigator.geolocation) {
+                window.navigator.geolocation.getCurrentPosition(function (result) {
+                    // 現在地の取得成功
+                    var position = result.coords,
+                        radius = position.accuracy,
+                        latLng = new google.maps.LatLng(position.latitude, position.longitude),
 
-                // 現在地に小さい円を書く
-                    circle = {
-                        center: latLng,
-                        radius: 10,
-                        map: map,
-                        strokeColor: '#44BBFF',
-                        strokeOpacity: 0.8,
-                        strokeWeight: 1,
-                        fillColor: '#44BBFF',
-                        fillOpacity: 0.8
-                    },
-                    circle = new google.maps.Circle(circle);
+                        // 現在地に小さい円を書く
+                        circle = {
+                            center: latLng,
+                            radius: 10,
+                            map: map,
+                            strokeColor: '#44BBFF',
+                            strokeOpacity: 0.8,
+                            strokeWeight: 1,
+                            fillColor: '#44BBFF',
+                            fillOpacity: 0.8
+                        },
+                        circle = new google.maps.Circle(circle);
                     // ズームして現在地へ移動
                     map.setZoom(16);
                     map.setCenter(latLng);
-            });
-        }
-    });
-    var mapData = <?php echo $maps; ?>;
-    var locations = [
-        mapData
-    ];
-    // ネストしてない連想配列を代入
-    var locations = locations[0];
-    var mcs = [];
-    var infowindow = new google.maps.InfoWindow();
-    // 投稿の文だけ繰り返し
-    for (var i = 0; i < locations.length; i++) {
-        // マーカー作成
-        var marker = new google.maps.Marker( {
-            position: new google.maps.LatLng( locations[i].lat, locations[i].lng),
-            map: map,
-            animation: google.maps.Animation.DROP,
-            label: String(locations[i].id)
-        });
-        // マーカークリックでカード出現
-        google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-                infowindow.setContent('<div class="card">'+
-                    '<div class="card-header">'+
-                    '<p>投稿者：' + locations[i].user.name + '</p>'+
-                    '<p>タイトル：' + locations[i].title + '</p>'+
-                    '</div>'+
-                    '<div class="card-body">'+
-                    '<p>場所：' + locations[i].place + '</p>'+
-                    '<p>日時：' + locations[i].date + '</p>'+
-                    '</div>' +
-                    '<div class="card-footer">'+
-                    '<a href="/map/' + locations[i].id + '">'+
-                    '<button class="btn btn-outline-primary">'+
-                    '詳細'+
-                    '</button></a>'+
-                    '</div>'+
-                    '</div>');
-                infowindow.open(map, marker);
-            }
-        })(marker, i));
-
-        // マーカーマウスホバーで簡易情報表示
-        google.maps.event.addListener( marker, 'mouseover', (function(marker, i) {
-            return function() {
-                infowindow.setContent('<p>投稿者：' + locations[i].user.name + '</p><hr><p>タイトル：' + locations[i].title + '</p><hr>' + '<p>場所：' + locations[i].place + '</p>');
-                infowindow.open(map, marker);
-            }
-        })(marker, i));
-        mcs.push(marker);
-    }
-    // マーカーをクラスターにする
-    var markerCluster = new MarkerClusterer(
-    map, mcs,
-    { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'}
-    );
-
-    // マップダブルクリックで投稿
-    map.addListener('dblclick', function(e) {
-        var userId = '<?php echo $auth; ?>';
-        if(userId === 'false') {
-            alert('予定を登録するにはログインが必要です。');
-            return false;
-        }
-        // フォームを表示
-        $('#form-new').modal('toggle');
-        // 緯度を取得
-        var clickLat = e.latLng.lat();
-        // クリックした地点の緯度をフォームにセット
-        newForm.lat.value = clickLat;
-
-        // 経度を取得
-        var clickLng = e.latLng.lng();
-        // クリックした地点の経度をフォームにセット
-        newForm.lng.value = clickLng;
-    });
-
-    // 地名検索イベント
-    function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({ 'address': address}, function(results, status) {
-            if(status === 'OK') {
-                map.setZoom(17);
-                resultsMap.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                map: resultsMap,
-                position: results[0].geometry.location,
-                zoom: 4
-            });
-            } else {
-                alert('検索できませんでした。理由：' + status);
+                });
             }
         });
+        var mapData = < ? php echo $maps; ? > ;
+        var locations = [
+            mapData
+        ];
+        // ネストしてない連想配列を代入
+        var locations = locations[0];
+        var mcs = [];
+        var infowindow = new google.maps.InfoWindow();
+        // 投稿の文だけ繰り返し
+        for (var i = 0; i < locations.length; i++) {
+            // マーカー作成
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i].lat, locations[i].lng),
+                map: map,
+                animation: google.maps.Animation.DROP,
+                label: String(locations[i].id)
+            });
+            // マーカークリックでカード出現
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent('<div class="card">' +
+                        '<div class="card-header">' +
+                        '<p>投稿者：' + locations[i].user.name + '</p>' +
+                        '<p>タイトル：' + locations[i].title + '</p>' +
+                        '</div>' +
+                        '<div class="card-body">' +
+                        '<p>場所：' + locations[i].place + '</p>' +
+                        '<p>日時：' + locations[i].date + '</p>' +
+                        '</div>' +
+                        '<div class="card-footer">' +
+                        '<a href="/map/' + locations[i].id + '">' +
+                        '<button class="btn btn-outline-primary">' +
+                        '詳細' +
+                        '</button></a>' +
+                        '</div>' +
+                        '</div>');
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+
+            // マーカーマウスホバーで簡易情報表示
+            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+                return function () {
+                    infowindow.setContent('<p>投稿者：' + locations[i].user.name + '</p><hr><p>タイトル：' +
+                        locations[i].title + '</p><hr>' + '<p>場所：' + locations[i].place + '</p>');
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+            mcs.push(marker);
+        }
+        // マーカーをクラスターにする
+        var markerCluster = new MarkerClusterer(
+            map, mcs, {
+                imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+            }
+        );
+
+        // マップダブルクリックで投稿
+        map.addListener('dblclick', function (e) {
+            var userId = '<?php echo $auth; ?>';
+            if (userId === 'false') {
+                alert('予定を登録するにはログインが必要です。');
+                return false;
+            }
+            // フォームを表示
+            $('#form-new').modal('toggle');
+            // 緯度を取得
+            var clickLat = e.latLng.lat();
+            // クリックした地点の緯度をフォームにセット
+            newForm.lat.value = clickLat;
+
+            // 経度を取得
+            var clickLng = e.latLng.lng();
+            // クリックした地点の経度をフォームにセット
+            newForm.lng.value = clickLng;
+        });
+
+        // 地名検索イベント
+        function geocodeAddress(geocoder, resultsMap) {
+            var address = document.getElementById('address').value;
+            geocoder.geocode({
+                'address': address
+            }, function (results, status) {
+                if (status === 'OK') {
+                    map.setZoom(17);
+                    resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location,
+                        zoom: 4
+                    });
+                } else {
+                    alert('検索できませんでした。理由：' + status);
+                }
+            });
+        }
     }
-}
-// END init.Map
+    // END init.Map
+
 </script>
 <!-- クラスターのライブラリ読込み -->
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
 <!-- google map API読込み -->
 <script src="https://maps.googleapis.com/maps/api/js?key={{ $google_api_key }}&callback=initMap" async defer></script>
 
@@ -233,18 +244,19 @@ function initMap() {
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ja.js"></script>
 <script>
-flatpickr(document.getElementsByClassName('date'), {
-    locale: 'ja',
-    dateFormat: 'Y/m/d',
-    minDate: 'today'
-});
-var submit = document.getElementById('submit');
-submit.addEventListener('click', function(e) {
-    if(newForm.date.value === '') {
-        e.preventDefault();
-        alert('日付を選択して下さい');
-        return false;
-    }
-});
+    flatpickr(document.getElementsByClassName('date'), {
+        locale: 'ja',
+        dateFormat: 'Y/m/d',
+        minDate: 'today'
+    });
+    var submit = document.getElementById('submit');
+    submit.addEventListener('click', function (e) {
+        if (newForm.date.value === '') {
+            e.preventDefault();
+            alert('日付を選択して下さい');
+            return false;
+        }
+    });
+
 </script>
 @endsection
