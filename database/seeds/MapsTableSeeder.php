@@ -114,6 +114,19 @@ class MapsTableSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
+            [
+                'user_id' => rand($min, $max),
+                'place' => '東京スカイツリー',
+                'title' => 'スカイツリーの展望台に行きませんか？',
+                'content' => '展望台に１度行ってみたいと思っており、どなたか一緒に行ける方いませんか？
+                ちなみにチケット料金は3,000円です。
+                時間は応相談でお願いします。',
+                'date' => $date,
+                'lat' => '35.710000',
+                'lng' => '139.810700',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
         ]);
     }
 }

@@ -19,41 +19,36 @@
 <div class="container">
     <div class="row text-center">
 
-        <div class="col-lg-4 mb-4">
+        <div class="col-10 offset-1 mb-4">
             <div class="card h-100 border-primary">
-                <img class="card-img-top card-header" src="{{ asset('test-user.png') }}" alt="">
+                <img class="card-img-top card-header" src="{{ asset('map.png') }}" alt="">
                 <div class="card-body">
-                    <h4 class="card-title">まずはみんなの予定を確認</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
-                        necessitatibus neque.</p>
+                    <h4 class="card-title text-secondary">地図を元に、出かけられる仲間を探す仲間募集アプリです。</h4>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-outline-warning">Find Out More!</a>
+                    <a href="{{ route('map.index') }}" class="btn btn-outline-dark">地図を見る</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4 mb-4">
+        <div class="col-10 offset-1 mb-4">
             <div class="card h-100 border-primary">
-                <img class="card-img-top card-header" src="{{ asset('test-user.png') }}" alt="">
+                <img class="card-img-top card-header" src="{{ asset('comment.png') }}" alt="">
                 <div class="card-body">
-                    <h4 class="card-title">気になる予定があったらコメントして見ましょう</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni
-                        sapiente, tempore debitis beatae culpa natus architecto.</p>
+                    <h4 class="card-title text-secondary">気になる予定があったらコメントして見ましょう。<br>都合が合えば一緒に遊んで楽しい時間を共有可能</h4>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-outline-warning">Find Out More!</a>
+                    <a href="{{ route('map.show', ['map' => 1]) }}" class="btn btn-outline-dark">募集情報をみる</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4 mb-4">
+        <div class="col-10 offset-1 mb-4">
             <div class="card h-100 border-primary">
-                <img class="card-img-top card-header" src="{{ asset('test-user.png') }}" alt="">
+                <img class="card-img-top card-header" src="{{ asset('map-post.png') }}" alt="">
                 <div class="card-body">
-                    <h4 class="card-title">テストユーザーでもログイン可能です</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
-                        necessitatibus neque.</p>
+                    <h4 class="card-title">募集をかけることも可能です。</h4>
+                    <p class="card-text">※行きたいお店や場所の上でダブルクリックして下さい。投稿フォームが表示され、募集を登録するとその地点にマーカーが置かれます。</p>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('login') }}" class="btn btn-outline-primary">ログイン</a>
