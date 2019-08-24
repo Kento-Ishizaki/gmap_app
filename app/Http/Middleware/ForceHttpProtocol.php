@@ -6,9 +6,11 @@ use Closure;
 class ForceHttpProtocol {
 
     public function handle($request, Closure $next) {
-        if (!$request->secure() && env('APP_ENV') === 'production') { // 本番環境のみ常時SSL化する
-            return redirect()->secure($request->getRequestUri(), 301);
-        }
+        if (config('app.env') === 'production' || config('app.env') === 'staging') { //本番環境のみhttpsに
+            if ($_SERVER["HTTP_X_FORWARDED_PROTO"] != 'https') {
+              return redirect()->secure($request->getRequestUri(), 301);
+            }
+          }
 
         return $next($request);
     }
