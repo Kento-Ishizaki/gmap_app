@@ -12,7 +12,8 @@ class MapController extends Controller
     public function index()
     {
         $maps = Map::all();
-        return view('map.index', ['maps' => $maps]);
+        $count = count($maps);
+        return view('map.index', ['maps' => $maps, 'count' => $count]);
     }
 
     public function store(MapPostRequest $request)
@@ -75,8 +76,10 @@ class MapController extends Controller
 
     public function search(Request $request)
     {
+        // DBからリクエストされた日付のデータ抽出
         $maps = Map::with(['user'])->where('date', $request->search)->get();
+        $count = count($maps);
         $maps = json_encode($maps);
-        return view('map.search',['maps' => $maps]);
+        return view('map.search',['maps' => $maps, 'count' => $count]);
     }
 }

@@ -24,12 +24,13 @@
     @csrf
     <input type="text" name="search" class="py-2 date border-secondary" placeholder="日付で絞り込み">
     <button type="submit" class="py-2 btn btn-dark" id="dateSearch">日付で検索</button>
+    <span>表示数：{{ $count }}件</span>
 </form>
 <div id="map"></div>
 <div style="text-align: center;">
     <input id="address" type="textbox" value="東京駅" class="py-2 border-secondary">
     <button id="search" class="py-2 btn btn-dark">検索</button>
-    <button id="here" class="py-2 btn btn-secondary">現在地</button>
+    <button id="here" class="py-2 btn btn-dark">現在地を表示</button>
 </div>
 <!-- 新規用モーダル -->
 <div class="modal fade" id="form-new" role="dialog">
@@ -162,17 +163,27 @@ $auth = 'false';
                 var locations = locations[0];
                 var mcs = [];
                 var infowindow = new google.maps.InfoWindow();
+                var colors = ["#E60012", "#F39800", "#FFF100", "#009944", "#0068B7", "#1D2088", "#920783"];
                 // 投稿の文だけ繰り返し
                 for (var i = 0; i < locations.length; i++) {
+                    // colorsからランダムで1色取得
+                    var color = colors[Math.floor(Math.random() * colors.length)];
                     // マーカー作成
                     var marker = new google.maps.Marker({
                         position: new google.maps.LatLng(locations[i].lat, locations[i].lng),
                         map: map,
                         animation: google.maps.Animation.DROP,
-                        label: String(locations[i].id),
+                        label: {
+                            text: String(locations[i].id),
+                            color: "#fff"
+                        },
                         icon: {
-                            url: '/map-icon.svg',
-                            scaledSize: new google.maps.Size(48, 62)
+                            fillColor: color,                //塗り潰し色 cssで色指定と同じ
+                            fillOpacity: 0.8,                    //塗り潰し透過率
+                            path: google.maps.SymbolPath.CIRCLE, //円を指定
+                            scale: 20,                           //円のサイズ
+                            strokeColor: color,              //枠の色
+                            strokeWeight: 1.0                    //枠の透過率
                         }
                     });
                     // マーカークリックでカード出現
@@ -180,7 +191,7 @@ $auth = 'false';
                         return function () {
                             infowindow.setContent('<div class="card">' +
                                 '<div class="card-header">' +
-                                '<p>投稿者：' + locations[i].user.name + '</p>' +
+                                '<p>投稿者：<a href="/users/' + locations[i].user.id + '">'+ locations[i].user.name + '</a></p>' +
                                 '<p>タイトル：' + locations[i].title + '</p>' +
                                 '</div>' +
                                 '<div class="card-body">' +
@@ -189,7 +200,7 @@ $auth = 'false';
                                 '</div>' +
                                 '<div class="card-footer">' +
                                 '<a href="/map/' + locations[i].id + '">' +
-                                '<button class="btn btn-outline-primary">' +
+                                '<button class="btn btn-dark">' +
                                 '詳細' +
                                 '</button></a>' +
                                 '</div>' +
@@ -201,8 +212,7 @@ $auth = 'false';
                     // マーカーマウスホバーで簡易情報表示
                     google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                         return function () {
-                            infowindow.setContent('<p>投稿者：' + locations[i].user.name +
-                                '</p><hr><p>タイトル：' + locations[i].title + '</p><hr>' +
+                            infowindow.setContent('<p>投稿者：<a href="/users/' + locations[i].user.id + '">'+ locations[i].user.name + '</a></p><hr><p>タイトル：' + locations[i].title + '</p><hr>' +
                                 '<p>場所：' + locations[i].place + '</p>');
                             infowindow.open(map, marker);
                         }
@@ -256,7 +266,7 @@ $auth = 'false';
                         zoom: 4
                     });
                 } else {
-                    alert('検索できませんでした。理由：' + status);
+                    alert('すみません、検索できませんでした。\n違うキーワードで検索をお願いします。');
                 }
             });
         }
