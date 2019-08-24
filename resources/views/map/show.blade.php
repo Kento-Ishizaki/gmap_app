@@ -86,7 +86,32 @@
     <h2 class="mt-5">コメント一覧</h2>
     <div id="data">
         @forelse ($map->comments as $comment)
-        <div class="card mb-2 comment">
+        <div class="media w-50 mx-auto border-bottom mt-1">
+            <a href="{{route('users.show', ['user' => $comment->user->id]) }}">
+                <img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle">
+                <p>{{ $comment->user->name }}</p>
+            </a>
+            <div class="media-body">
+                <p class="mb-3 ">{{ $comment->body }}</p>
+                {{ $comment->created_at }}
+                @if($comment->user_id === Auth::id())
+                <form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="POST" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-outline-danger" id="commentDelete"
+                        onclick="return confirm('本当に削除して宜しいですか？');">
+                        削除
+                    </button>
+                </form>
+                @endif
+            </div>
+        </div><!-- /.media -->
+
+
+
+
+
+        {{-- <div class="card mb-2 comment">
             <div class="card-header">
                 <p><img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">投稿者：<a
                         href="{{route('users.show', ['user' => $comment->user->id]) }}">{{ $comment->user->name }}</a>
@@ -94,8 +119,8 @@
                 投稿日時：{{ $comment->created_at }}
             </div>
             <div class="card-body">
-                {{ $comment->body }}
-                @if($comment->user_id === Auth::id())
+                {{ $comment->body }} --}}
+                {{-- @if($comment->user_id === Auth::id())
                 <form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')
@@ -106,7 +131,7 @@
                 </form>
                 @endif
             </div>
-        </div>
+        </div> --}}
         @empty
         <p id="noComment">コメントがありません。</p>
         @endforelse
@@ -179,16 +204,14 @@ $auth = 'false';
                         data.success + '</div>';
                     $('#commentForm')[0].reset();
                     // 最後のコメント後に要素を追加
-                    $('#data').append('<div class="card mb-2 comment">' +
-                        '<div class="card-header">' +
-                        '<p><img src="' + data.avatar + '" width="50" class="rounded-circle mr-2">' +
-                        '投稿者：<a href="/users/' + data.comment.user_id + '">' +
-                        data.name + '</a></p>' +
-                        '投稿日時：' + data.comment.created_at +
-                        '</div>' +
-                        '<div class="card-body">' +
-                        data.comment.body +
-                        '<form action="/map/' + data.comment.id + '/comments"' + ' method="POST">' +
+                    $('#data').append('<div class="media w-50 mx-auto border-bottom mt-1">' +
+                        '<a href="/users/' + data.comment.user_id + '">' +
+                        '<img src="' + data.avatar + '" width="50" class="rounded-circle">' +
+                        '<p>' + data.name + '</p></a>' +
+                        '<div class="media-body">' + 
+                        '<p class="mb-3">' + data.comment.body + '</p>' +
+                        data.comment.created_at +
+                        '<form action="/map/' + data.comment.id + '/comments"' + ' method="POST" class="d-inline">' +
                         '@csrf' +
                         '@method("DELETE")' +
                         '<button type="submit" class="btn btn-outline-danger" id="commentDelete" onclick="return confirm(`本当に削除して宜しいですか？`);">' +

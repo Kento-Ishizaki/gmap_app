@@ -47,7 +47,9 @@
         <ul class="nav nav-tabs nav-fill mt-5">
             <li class="nav-item nav-item-show"><a href="#" id="postsTab" class="nav-link active">投稿一覧</a></li>
             <li class="nav-item nav-item-show"><a href="#" id="favosTab" class="nav-link">お気に入り一覧</a></li>
+        @if (Auth::id() === $user->id)
             <li class="nav-item nav-item-show"><a href="#" id="commentsTab" class="nav-link">コメント一覧</a></li>
+        @endif
         </ul>
 
         <div id="myPosts" class="nav-cnt mt-5">
@@ -82,7 +84,6 @@
                             </div>
                             <div class="card-body">
                                 <p>投稿タイトル：{{ $like->map->title }}</p>
-
                                 <p>場所：{{ $like->map->place }}</p>
                                 <p>日付：{{ $like->map->date }}</p>
                                 <a href="{{ route('map.show', ['map' => $like->map->id]) }}"><button class="btn btn-outline-primary">詳細</button></a>
@@ -105,7 +106,7 @@
                                     <img src="{{ $comment->map->user->avatar_image }}" width="50" class="rounded-circle mr-2">
                                     投稿者名：<a href="{{ route('users.show', ['user' => $comment->map->user]) }}">{{ $comment->map->user->name }}</a>さん</p>
                                 </p>
-                                <p>投稿タイトル：{{ $comment->map->date }}</p>
+                                <p>投稿タイトル：{{ $comment->map->title }}</p>
                                 <p>場所：{{ $comment->map->place }}</p>
                                 <p>日時：{{ $comment->map->date }}</p>
                             </div>
