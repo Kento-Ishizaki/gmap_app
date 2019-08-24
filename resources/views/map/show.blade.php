@@ -86,7 +86,7 @@
     <h2 class="mt-5">コメント一覧</h2>
     <div id="data">
         @forelse ($map->comments as $comment)
-        <div class="media w-50 mx-auto border-bottom mt-1">
+        <div class="media w-75 mx-auto border-bottom mt-1">
             <a href="{{route('users.show', ['user' => $comment->user->id]) }}">
                 <img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle">
                 <p>{{ $comment->user->name }}</p>
@@ -106,32 +106,6 @@
                 @endif
             </div>
         </div><!-- /.media -->
-
-
-
-
-
-        {{-- <div class="card mb-2 comment">
-            <div class="card-header">
-                <p><img src="{{ $comment->user->avatar_image }}" width="50" class="rounded-circle mr-2">投稿者：<a
-                        href="{{route('users.show', ['user' => $comment->user->id]) }}">{{ $comment->user->name }}</a>
-                </p>
-                投稿日時：{{ $comment->created_at }}
-            </div>
-            <div class="card-body">
-                {{ $comment->body }} --}}
-                {{-- @if($comment->user_id === Auth::id())
-                <form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-outline-danger" id="commentDelete"
-                        onclick="return confirm('本当に削除して宜しいですか？');">
-                        削除
-                    </button>
-                </form>
-                @endif
-            </div>
-        </div> --}}
         @empty
         <p id="noComment">コメントがありません。</p>
         @endforelse
@@ -141,9 +115,9 @@
         <span id="commentResult"></span>
         <div class="form-group">
             <label for="comment">コメントフォーム</label>
-            <input type="text" class="form-control w-50 mx-auto" name="body" value="{{ old('body') }}">
+            <input type="text" class="form-control w-75 mx-auto" name="body" value="{{ old('body') }}">
         </div>
-        <input type="submit" class="btn btn-outline-success w-50" value="コメント">
+        <input type="submit" class="btn btn-outline-success w-75" value="コメント">
     </form>
 </div>
 @if(Auth::check())
@@ -172,7 +146,7 @@ $auth = 'false';
     $('#commentForm').on('submit', function (e) {
         var userId = '<?php echo $auth; ?>';
         if (userId === 'false') {
-            alert('予定を登録するにはログインが必要です。');
+            alert('コメントするにはログインが必要です。');
             return false;
         }
         e.preventDefault();
@@ -204,7 +178,7 @@ $auth = 'false';
                         data.success + '</div>';
                     $('#commentForm')[0].reset();
                     // 最後のコメント後に要素を追加
-                    $('#data').append('<div class="media w-50 mx-auto border-bottom mt-1">' +
+                    $('#data').append('<div class="media w-75 mx-auto border-bottom mt-1">' +
                         '<a href="/users/' + data.comment.user_id + '">' +
                         '<img src="' + data.avatar + '" width="50" class="rounded-circle">' +
                         '<p>' + data.name + '</p></a>' +
