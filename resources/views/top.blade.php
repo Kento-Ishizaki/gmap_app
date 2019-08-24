@@ -47,11 +47,11 @@
             <div class="card h-100 border-primary">
                 <img class="card-img-top card-header" src="{{ asset('map-post.png') }}" alt="">
                 <div class="card-body">
-                    <h4 class="card-title">募集をかけることも可能です。</h4>
+                    <h4 class="card-title">募集をかけることも可能です。(ログイン必須)</h4>
                     <p class="card-text">※行きたいお店や場所の上でダブルクリックして下さい。投稿フォームが表示され、募集を登録するとその地点にマーカーが置かれます。</p>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary">ログイン</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-dark">ログイン</a>
                 </div>
             </div>
         </div>

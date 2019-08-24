@@ -23,11 +23,10 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     // urlを全てhttpsにする
-    public function boot(UrlGenerator $url)
+    public function boot()
     {
-        // $url->forceScheme('https');
         if (config('app.env') === 'production' || config('app.env') === 'staging') {
-            \URL::forceSchema('https');
+            \URL::forceScheme('https');
         }
     }
 }
