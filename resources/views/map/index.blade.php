@@ -278,7 +278,7 @@ $auth = 'false';
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
 <!-- google map API読込み -->
-<script src="https://maps.googleapis.com/maps/api/js?key={{ $google_api_key }}&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAk5aRysZpoAKdXvPyPCWQFJWjCl7GcCXY&callback=initMap" async defer></script>
 
 <!-- flatpickrライブラリ読込み -->
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
